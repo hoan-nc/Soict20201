@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/common :: common-css">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Home page</title>
+    <link rel="stylesheet" th:href="@{~/css/detail.css}" type="text/css">
+</head>
+
+<body>
+<div th:replace="fragments/common :: top-bar"></div>
+<div th:replace="fragments/common :: search"></div>
+
+
+<section class="recipe-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pro-img-details">
+                    <img th:src="${p.documentVM.mainImage}" alt="">
+                </div>
+                <div class="pro-img-list">
+                    <th:block th:each="c, j : ${p.documentVM.childImages}">
+                        <a href="#">
+                            <img width="200px" height="200px" th:src="${c}" alt="">
+                        </a>
+                    </th:block>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h4 class="pro-d-title">
+                    <h2 th:text="${p.name}"></h2>
+                </h4>
+                <p th:text="${p.description}">
+                </p>
+                <div class="product_meta">
+                    <span class="posted_in"> <strong>Categories:</strong> <a rel="tag" href="#">Jackets</a>, <a
+                            rel="tag" href="#">Men</a>, <a rel="tag" href="#">Shirts</a>, <a rel="tag"
+                                                                                             href="#">T-shirt</a>.</span>
+                    <span class="tagged_as"><strong>Tags:</strong> <a rel="tag" href="#">mens</a>, <a rel="tag"
+                                                                                                      href="#">womens</a>.</span>
+                </div>
+                <div class="m-bot15"><strong>Price : </strong>
+<!--                    <span class="amount-old">$544</span>-->
+                    <span class="pro-price"> <p class="fPrice" th:text="${p.price}"></p></span>
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="quantiy" placeholder="1" class="form-control quantity">
+                </div>
+                <p>
+                    <button class="btn btn-round btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to
+                        Cart
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div th:replace="fragments/common :: footer"></div>
+<div th:replace="fragments/common :: common-js"></div>
+<script th:src="@{~/js/detail.js}"></script>
+</body>
+</html>

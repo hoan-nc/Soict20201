@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/common :: common-css">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Home page</title>
+</head>
+<body>/prepareInsertCat
+<div th:replace="fragments/common :: common-js"></div>
+<script>
+    window.close();
+    window.opener.location.href = window.opener.location.href;
+</script>
+</body>
+</html>

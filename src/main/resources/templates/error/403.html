@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/common :: common-css">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Setting page</title>
+</head>
+
+<body>
+<div th:replace="fragments/common :: top-bar"></div>
+<div th:replace="fragments/common :: left-sidebar"></div>
+
+<div class="content-page">
+    <!-- Start content -->
+    <div class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title float-left">Dashboard</h4>
+
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item"><a href="/">Safety</a></li>
+                            <li class="breadcrumb-item active">Error</li>
+                        </ol>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="card-box">
+                    <div class="starter-template" ><h1 style="color:red">403 - Access is denied</h1>
+                        <p class="mega"><span class="bola"></span></p>
+                        <div th:inline="text">Hello '[[${#httpServletRequest.remoteUser}]]', you do not have permission
+                            to access this page.
+                        </div>
+                    </div>
+            </div>
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+
+
+    <div th:replace="fragments/common :: footer"></div>
+
+
+</div>
+
+<div th:replace="fragments/common :: common-js"></div>
+</body>
+</html>

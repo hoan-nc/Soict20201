@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/common :: common-css">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Setting page</title>
+</head>
+
+<body>
+<div th:replace="fragments/common :: top-bar"></div>
+<div th:replace="fragments/common :: left-sidebar"></div>
+
+<div class="content-page">
+    <!-- Start content -->
+    <div class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title float-left">Dashboard</h4>
+
+                        <ol class="breadcrumb float-right">
+                            <li class="breadcrumb-item"><a href="/">eP Evaluation</a></li>
+                            <li class="breadcrumb-item active">Setting</li>
+                        </ol>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row"  >
+                <div class="col-lg-12">
+                    <div class="card-box">
+                        <h4 class="header-title m-t-0"> Setting </h4>
+                        <div class="form-group">
+                            <label for="time"> Time <span class="text-danger">*</span></label>
+                            <input type="number" name="time" parsley-trigger="change"
+                                   onchange="timeChange(this)" value="1" class="form-control" id="time">
+                        </div>
+                        <div class="form-group text-right m-b-0">
+                            <button onclick="save()" class="btn btn-gradient waves-effect waves-light">
+                                Save
+                            </button>
+                        </div>
+
+                    </div> <!-- end card-box -->
+                </div>
+            </div>
+
+
+
+        </div> <!-- container -->
+
+    </div> <!-- content -->
+
+
+    <div th:replace="fragments/common :: footer"></div>
+
+
+</div>
+
+<div th:replace="fragments/common :: common-js"></div>
+<script th:src="@{js/app/setting.js}"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/common :: common-css">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Register</title>
+</head>
+
+<body>
+<div th:replace="fragments/common :: top-bar"></div>
+<div th:replace="fragments/common :: search"></div>
+
+
+<section class="recipe-section spad">
+    <div class="container">
+        <div class="row">
+            <form th:action="@{/register-user}" th:object="${user}" method="post">
+                <fieldset>
+                    <h2 style="margin-bottom: 10px">Đăng kí </h2>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label for="username">Tên đăng nhập :</label>
+                                <input type="text" class="form-control" id="username" th:field="*{userName}"
+                                       name="username"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Mật khẩu :</label>
+                                <input type="password" class="form-control" id="password" th:field="*{password}"
+                                       name="password"/>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-primary btn-block btn-register">Đăng kí</button>
+                </fieldset>
+            </form>
+
+
+        </div>
+</section>
+
+
+<div th:replace="fragments/common :: footer"></div>
+<div th:replace="fragments/common :: common-js"></div>
+<script th:src="@{~/js/detail.js}"></script>
+</body>
+</html>
