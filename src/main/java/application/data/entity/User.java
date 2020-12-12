@@ -1,16 +1,24 @@
 package application.data.entity;
 
+import application.data.repository.IUserRoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class User {
+    @Autowired
+    IUserRoleRepository iUserRoleRepository;
+
     private int userId;
     private String userName;
     private String passwordHash;
     private String password;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     public int getUserId() {
         return userId;
@@ -63,4 +71,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

@@ -40,7 +40,7 @@
             <div class="form-item log-in">
                 <div class="table">
                     <div class="table-cell">
-                        <form th:action="@{/login}" method="post">
+                        <form id="login" th:action="@{/login}" method="post">
 
                             <div th:if="${param.error}">
                                 <div class="alert alert-danger">
@@ -72,7 +72,7 @@
             <div class="form-item sign-up">
                 <div class="table">
                     <div id="register" class="table-cell">
-                        <form th:action="@{/register-user}" th:object="${user}" method="post">
+                        <form id="registerUser" th:action="@{/register-user}" th:object="${user}" method="post">
 
                             <input name="userName" th:field="*{userName}" placeholder="Username" type="text"/>
                             <input name="password" th:field="*{password}" placeholder="Password" type="Password"/>

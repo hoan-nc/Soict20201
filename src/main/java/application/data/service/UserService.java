@@ -3,18 +3,22 @@ package application.data.service;
 import application.constant.RoleIdConstant;
 import application.constant.StatusRegisterUserEnum;
 import application.constant.StatusRoleConstant;
+import application.data.entity.Person;
 import application.data.entity.Role;
 import application.data.entity.User;
 import application.data.entity.UserRole;
+import application.data.repository.IPersonRepository;
 import application.data.repository.IRoleRepository;
 import application.data.repository.IUserRepository;
 import application.data.repository.IUserRoleRepository;
+import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -46,13 +50,13 @@ public class UserService {
 
             user.setPasswordHash(passwordEncoder.encode(user.getPassword()));
             // save user
-            userRepository.save(user);
+            Integer userId = userRepository.save(user).getUserId();
 
 
             // insert new role
             UserRole userRole = new UserRole();
             userRole.setRoleId(RoleIdConstant.Role_User);
-            userRole.setUserId(user.getUserId());
+            userRole.setUserId(userId);
             userRole.setStatus(StatusRoleConstant.ActiveStatus);
 
             userRoleRepository.save(userRole);
@@ -64,11 +68,9 @@ public class UserService {
         }
     }
 
-
     public User findOne(Long id) {
         return userRepository.findById(id).get();
     }
-
 
 
     public boolean saveUserRole(UserRole userRole) {
@@ -124,6 +126,23 @@ public class UserService {
             return (listUserRoles.stream().filter(userRole -> userRole.getRoleId() == role.getRoleId()).findFirst().orElse(null) != null);
         }).collect(Collectors.toList());
     }
+
+//    public List<String> getListRole(Integer userId) {
+//        List<UserRole> userRoles = userRoleRepository.findRolesOfUser(userId);
+//        List<String> lstRole = new ArrayList<String>(){};
+//        for (int i = 0; i < userRoles.size(); i++) {
+//            switch (userRoles.get(i).getRoleId()) {
+//                case RoleIdConstant.Role_Admin:
+//                    lstRole.add("Admin");
+//                    break;
+//                case RoleIdConstant.Role_User:
+//                    lstRole.add("User");
+//                    break;
+//                default:
+//            }
+//        }
+//        return lstRole;
+//    }
 
 
 }

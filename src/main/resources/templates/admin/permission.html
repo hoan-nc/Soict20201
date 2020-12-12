@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:include="fragments/sidebar :: common-css-admin">
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: side-bar"></div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Bắt đầu nội dung trang -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <div th:replace="fragments/topbar :: top-bar"></div>
+            <!-- End of Topbar -->
+
+            <!-- Bắt đầu bảng phân quyền -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Danh sách người dùng hệ thống</h1>
+                <!--                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For-->
+                <!--                    more information about DataTables, please visit the <a target="_blank"-->
+                <!--                                                                           href="https://datatables.net">official-->
+                <!--                        DataTables documentation</a>.</p>-->
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <!--                    <div class="card-header py-3">-->
+                    <!--                        <h6 class="m-0 font-weight-bold text-primary">Phân quyền</h6>-->
+                    <!--                    </div>-->
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã cán bộ</th>
+                                    <th>Họ và tên</th>
+                                    <th>Phòng ban</th>
+                                    <th>Quyền</th>
+                                    <th>Thay đổi</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã cán bộ</th>
+                                    <th>Họ và tên</th>
+                                    <th>Phòng ban</th>
+                                    <th>Quyền</th>
+                                    <th>Thay đổi</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <th:block th:each="u,i:${allUsers}">
+                                    <tr>
+                                        <form th:id="${'formProduct'+i.count}" class="form-horizontal"
+                                              th:action="@{/admin/setPermit}"
+                                              th:object="${userRoleUpdate}" th:method="post">
+                                            <td th:text="${i.count}"></td>
+                                            <td th:field="*{status}" th:name="userId" th:text="${u.userId}" th:value="${u.userId}"></td>
+                                            <td th:text="${u.userName}"></td>
+                                            <td th:text="${u.userId}"></td>
+                                            <!--                                        <td th:text="${mapRole.get(u.userId)}">-->
+<!--                                            <input type="hidden" id="userRoleId" th:field="*{userRoleId}" th:value="${mapRole.get(u.userId).userRoleId}">-->
+<!--                                            <input type="hidden" id="userId" th:field="*{userId}" th:value="${u.userId}">-->
+<!--                                            <input type="hidden" id="status" th:field="*{status}" th:value="${mapRole.get(u.userId).status}">-->
+                                            <td>
+                                                <select th:field="*{roleId}">
+                                                    <option th:each="r : ${roles}"
+                                                            th:text="${r.getRoleName()}" th:value="${r.roleId}">
+                                                    </option>
+                                                    <input type="hidden" th:field="*{userId}" id="userId" th:value="${u.userId}"></input>
+                                                </select>
+                                            </td>
+                                            <td><input class="btn btn-danger" type="submit" value="Submit"/></td>
+
+                                        </form>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Kết thúc bảng phân quyền -->
+
+        </div>
+        <!-- Kết thúc trang -->
+
+        <!-- Footer -->
+        <div th:replace="fragments/footer :: footer"></div>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+
+
+<div th:replace="fragments/sidebar :: sidebar-js"></div>
+<script th:src="@{~/js/common.js}"></script>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{~/js/jquery/jquery.min.js}"></script>
+<script th:src="@{~/js/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{~/js/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{~/js/sb-admin-2.min.js}"></script>
+<!-- Page level plugins -->
+<script th:src="@{~/js/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{~/js/datatables/dataTables.bootstrap4.min.js}"></script>
+
+<!-- Page level custom scripts -->
+<script th:src="@{~/js/demo/datatables-demo.js}"></script>
+</body>
+
+</html>

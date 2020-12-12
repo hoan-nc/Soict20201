@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IUserRoleRepository extends JpaRepository<UserRole, Long> {
 
     @Query("select u from UserRole u where u.userId = :id")
-    Iterable<UserRole> findRolesOfUser(@Param("id") Integer userId);
+    List<UserRole> findRolesOfUser(@Param("id") Integer userId);
  }

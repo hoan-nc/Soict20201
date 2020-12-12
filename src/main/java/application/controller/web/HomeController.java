@@ -41,5 +41,10 @@ public class HomeController {
     String error() {
         return "error/403";
     }
+
+    @GetMapping("/home")
+    String home() {
+        return "admin/homepage";
+    }
 }
 
