@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,20 +32,17 @@ public class UserDetailAuthenticatorService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<UserEntity> optional = userRepository.findByUserNameIgnoreCase(s);
         if (optional.isPresent()) {
-
             boolean isActive = true;
             UserEntity userEntity = optional.get();
             List<RoleEntity> listActiveRoleEntities = userService.getListRoleActiveOfUser(userEntity.getId());
-            if (listActiveRoleEntities.size() == 0) {
+            if (CollectionUtils.isEmpty(listActiveRoleEntities)) {
                 isActive = false;
             }
-
             // roles set
             Set<GrantedAuthority> setAuths = new HashSet<>();
             for (RoleEntity roleEntity : listActiveRoleEntities) {
-                setAuths.add(new SimpleGrantedAuthority(roleEntity.getRoleName()));
+                setAuths.add(new SimpleGrantedAuthority(roleEntity.getRoleCode()));
             }
-
             return new org.springframework.security.core.userdetails.User(s, userEntity.getPasswordHash(),
                     isActive, true, true, true, setAuths);
         }
