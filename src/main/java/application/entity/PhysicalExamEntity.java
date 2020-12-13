@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Person")
+@Table(name = "physical_exam_profile")
 @Data
 @Builder
 @AllArgsConstructor

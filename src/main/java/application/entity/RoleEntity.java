@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Role")
+@Table(name = "role")
 @Data
 @Builder
 @AllArgsConstructor
