@@ -66,9 +66,10 @@
                                             <td th:text="${u.user.fullName}"></td>
                                             <td th:text="${u.user.className}"></td>
                                             <td>
-                                                <select th:field="*{id.roleId}">
-                                                    <option th:each="r : ${roles}"
-                                                            th:text="${r.roleName}" th:value="${r.id}">
+                                                <select th:field="*{id.roleId}" class="form-control">
+                                                    <option th:each="role : ${roles}"
+                                                            th:text="${role.roleName}" th:value="${role.id}"
+                                                            th:selected="${role.id == u.id.roleId}">
                                                     </option>
                                                 </select>
                                             </td>
