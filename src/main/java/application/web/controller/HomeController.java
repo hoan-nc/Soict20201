@@ -1,29 +1,28 @@
 package application.web.controller;
 
 import application.entity.UserEntity;
-import application.service.file.FileService;
-import org.modelmapper.ModelMapper;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
 
-    private final ModelMapper modelMapper;
-    private final FileService fileService;
-
-    public HomeController(ModelMapper modelMapper, FileService fileService) {
-        this.modelMapper = modelMapper;
-        this.fileService = fileService;
-    }
-
     @GetMapping
     String home(Model model) {
-        return "index";
+        return "home";
+    }
+
+    @GetMapping("/403")
+    String error() {
+        return "error/403";
     }
 
     @GetMapping("/login")
@@ -32,19 +31,14 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/logout")
-    String logout() {
-        return "logout";
-    }
-
-    @GetMapping("/403")
-    String error() {
-        return "error/403";
-    }
-
     @GetMapping("/home")
     String home() {
-        return "admin/homepage";
+        List<SimpleGrantedAuthority> authorities = (List<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        SimpleGrantedAuthority simpleGrantedAuthority = authorities.get(0);
+        if ("ROLE_ADMIN".equalsIgnoreCase(simpleGrantedAuthority.getAuthority())) {
+            return "admin/homepage";
+        }
+        return "home";
     }
 }
 

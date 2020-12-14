@@ -5,6 +5,8 @@ import application.service.UserService;
 import application.utils.StatusRegisterUserEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,4 +40,18 @@ public class UserController {
         logger.info(statusRegisterUserEnum.toString());
         return "redirect:/";
     }
+
+    @GetMapping("/user/general-profile")
+    String getGeneralProfiles(Model model) {
+        String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        model.addAttribute("allMyPhysical", userService.getAllPhysicalExamByUser(username));
+        return "myProfile";
+    }
+
 }

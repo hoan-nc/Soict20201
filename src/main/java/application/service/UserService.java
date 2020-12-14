@@ -1,9 +1,11 @@
 package application.service;
 
+import application.entity.PhysicalExamEntity;
 import application.entity.RoleEntity;
 import application.entity.UserEntity;
 import application.entity.UserRoleEntity;
 import application.entity.id.UserRoleId;
+import application.repository.IPhysicalExamRepository;
 import application.repository.IRoleRepository;
 import application.repository.IUserRepository;
 import application.repository.IUserRoleRepository;
@@ -30,15 +32,19 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final IPhysicalExamRepository physicalExamRepository;
+
     @Autowired
     public UserService(IRoleRepository roleRepository,
                        IUserRepository userRepository,
                        IUserRoleRepository userRoleRepository,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder,
+                       IPhysicalExamRepository physicalExamRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.physicalExamRepository = physicalExamRepository;
     }
 
     public StatusRegisterUserEnum registerNewUser(UserEntity userEntity) {
@@ -110,4 +116,9 @@ public class UserService {
     public List<RoleEntity> getListRoleActiveOfUser(Long userId) {
         return roleRepository.findAllRoleOfUser(userId);
     }
+
+    public List<PhysicalExamEntity> getAllPhysicalExamByUser(String username) {
+        return physicalExamRepository.findAllByUser(username);
+    }
+
 }

@@ -5,7 +5,6 @@ import application.entity.*;
 import application.service.PermitService;
 import application.service.UserService;
 import application.service.file.FileService;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,35 +18,19 @@ import java.security.Principal;
 @RequestMapping("/admin")
 public class AdminController {
     private final PermitService permitService;
-
-    private final ModelMapper modelMapper;
-
     private final FileService fileService;
-
     private final UserService userService;
 
-    public AdminController(PermitService permitService, ModelMapper modelMapper, FileService fileService, UserService userService) {
+    public AdminController(PermitService permitService, FileService fileService, UserService userService) {
         this.permitService = permitService;
-        this.modelMapper = modelMapper;
         this.fileService = fileService;
         this.userService = userService;
     }
-
 
     @GetMapping("/upload")
     String index(Model model) {
         model.addAttribute("fileUpload", new FileUpload());
         return "admin/upload";
-    }
-
-    @GetMapping("/login")
-    String login(Model model) {
-        return "login";
-    }
-
-    @GetMapping("/home")
-    String getHome(Model model) {
-        return "admin/homepage";
     }
 
     @PostMapping("/updateUpload")
@@ -86,7 +69,6 @@ public class AdminController {
         return "redirect:/admin/users-permissions";
     }
 
-
     @PostMapping(value = "/users-permissions/update")
     String updateUserPermission(Long userId, Long roleId,
                                 @Valid @ModelAttribute("userRoleUpdate") UserRoleEntity userRoleEntity) {
@@ -114,7 +96,6 @@ public class AdminController {
         permitService.savePhysicalExam(entity);
         return "redirect:/admin/general-profiles";
     }
-
 
     @GetMapping("/general-profiles/edit/{id}")
     String showUpdateForm(@PathVariable("id") Long id, Model model) {
