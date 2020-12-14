@@ -20,15 +20,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(SpringSecurityConfig.class);
 
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
+    private final AccessDeniedHandler accessDeniedHandler;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     @Qualifier("userDetailsService")
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    public SpringSecurityConfig(AccessDeniedHandler accessDeniedHandler, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -42,7 +45,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/")
+                .formLogin().loginPage("/login").defaultSuccessUrl("/home")
                 .permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")

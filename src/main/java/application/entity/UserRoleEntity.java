@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper = false)
-@Where(clause = "status = false")
+@Where(clause = "status = true")
 public class UserRoleEntity implements Serializable {
 
     @EmbeddedId

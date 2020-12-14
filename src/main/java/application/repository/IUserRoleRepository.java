@@ -8,10 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IUserRoleRepository extends JpaRepository<UserRoleEntity, UserRoleId> {
 
-    @Query("select u from UserRoleEntity u where u.status = true and u.id.userId = :id")
-    List<UserRoleEntity> findUserRoleOfUser(@Param("id") Long userId);
+    @Query("select u from UserRoleEntity u where u.id.userId = :id")
+    Optional<UserRoleEntity> findUserRoleOfUser(@Param("id") Long userId);
 }

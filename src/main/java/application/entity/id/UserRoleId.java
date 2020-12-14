@@ -1,9 +1,6 @@
 package application.entity.id;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,6 +8,7 @@ import java.io.Serializable;
 
 @Embeddable
 @Data
+@Builder
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor

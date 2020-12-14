@@ -29,18 +29,11 @@
 
                 <!-- Page Heading -->
                 <h1 class="h3 mb-2 text-gray-800">Danh sách người dùng hệ thống</h1>
-                <!--                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For-->
-                <!--                    more information about DataTables, please visit the <a target="_blank"-->
-                <!--                                                                           href="https://datatables.net">official-->
-                <!--                        DataTables documentation</a>.</p>-->
-
-                <!-- DataTales Example -->
                 <div class="card shadow mb-4">
-                    <!--                    <div class="card-header py-3">-->
-                    <!--                        <h6 class="m-0 font-weight-bold text-primary">Phân quyền</h6>-->
-                    <!--                    </div>-->
-
                     <div class="card-body">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#addUserModal">Thêm mới
+                        </button>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
@@ -49,30 +42,34 @@
                                     <th>Mã cán bộ</th>
                                     <th>Họ và tên</th>
                                     <th>Phòng ban</th>
-                                    <th>Quyền</th>
-                                    <th>Thay đổi</th>
+                                    <th>Phân quyền</th>
+                                    <th>Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <th:block th:each="u,i:${allUsers}">
+                                <th:block th:each="u,i:${allUserRoles}">
                                     <tr>
-                                        <form th:id="${'formProduct'+i.count}" class="form-horizontal"
-                                              th:action="@{/admin/setPermit}" th:object="${userRoleUpdate}"
-                                              th:method="post">
+                                        <form class="form-horizontal" th:method="post"
+                                              th:action="@{/admin/users-permissions/update(userId=${u.id.userId},roleId=${u.id.roleId})}"
+                                              th:object="${userRoleUpdate}">
                                             <td th:text="${i.count}"></td>
-                                            <td th:text="${u.userName}"></td>
-                                            <td th:text="${u.fullName}"></td>
-                                            <td th:text="${u.className}"></td>
+                                            <td th:text="${u.user.userName}"></td>
+                                            <td th:text="${u.user.fullName}"></td>
+                                            <td th:text="${u.user.className}"></td>
                                             <td>
                                                 <select th:field="*{id.roleId}">
                                                     <option th:each="r : ${roles}"
-                                                            th:text="${r.getRoleName()}" th:value="${r.getId()}">
+                                                            th:text="${r.roleName}" th:value="${r.id}">
                                                     </option>
-                                                    <input type="hidden" th:field="*{id.userId}" id="userId"
-                                                           th:value="${u.getId()}">
                                                 </select>
                                             </td>
-                                            <td><input class="btn btn-danger" type="submit" value="Submit"/></td>
+                                            <td>
+                                                <button type="submit" class="btn btn-warning">Cập nhật</button>
+
+                                                <a th:href="@{/admin/general-profiles/delete/{id}(id=${u.id})}"
+                                                   id="deleteProfileButtonRow"
+                                                   class="btn btn-danger">Xóa</a>
+                                            </td>
                                         </form>
                                     </tr>
                                 </th:block>
@@ -80,6 +77,57 @@
                             </table>
                         </div>
                     </div>
+                </div>
+
+                <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form action="#" th:action="@{/admin/users-permissions/addNew}" method="post">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm mới người dùng</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="addUser-fullName" class="col-form-label">Họ và tên:</label>
+                                        <input type="text" required class="form-control"
+                                               id="addUser-fullName" name="fullName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addUser-className" class="col-form-label">Phòng ban:</label>
+                                        <input type="text" required class="form-control" id="addUser-className"
+                                               name="className">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addUser-userName" class="col-form-label">Tên tài khoản:</label>
+                                        <input type="text" required class="form-control" id="addUser-userName"
+                                               name="userName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addUser-password" class="col-form-label">Mật khẩu:</label>
+                                        <input type="text" required class="form-control" id="addUser-password"
+                                               name="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="roleId" class="col-form-label">Phân quyền:</label>
+                                        <select id="roleId" name="roleId">
+                                            <option th:each="role : ${roles}"
+                                                    th:value="${role.id}"
+                                                    th:utext="${role.roleName}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
             </div>
