@@ -31,9 +31,18 @@
                 <h1 class="h3 mb-2 text-gray-800">Danh sách người dùng hệ thống</h1>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#addUserModal">Thêm mới
-                        </button>
+                        <div class="row">
+                            <div class="col">
+                                <div style="margin-bottom: 20px;">
+                                    <button class="btn btn-primary newBtn"
+                                            data-toggle="modal"
+                                            data-target="#addUserModal">
+                                        <i class="fas fa-plus-circle"></i> Thêm mới
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>

@@ -35,10 +35,10 @@ public class UserController {
     }
 
     @RequestMapping(path = "/register-user", method = RequestMethod.POST)
-    public String registerNewUser(@Valid @ModelAttribute("user") UserEntity userEntity, BindingResult result) {
+    public String registerNewUser(@Valid @ModelAttribute("user") UserEntity userEntity) {
         StatusRegisterUserEnum statusRegisterUserEnum = userService.registerNewUser(userEntity);
         logger.info(statusRegisterUserEnum.toString());
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/user/general-profile")

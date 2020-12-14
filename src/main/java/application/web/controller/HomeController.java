@@ -17,7 +17,7 @@ public class HomeController {
 
     @GetMapping
     String home(Model model) {
-        return "home";
+        return "homeUser";
     }
 
     @GetMapping("/403")
@@ -38,7 +38,7 @@ public class HomeController {
         if ("ROLE_ADMIN".equalsIgnoreCase(simpleGrantedAuthority.getAuthority())) {
             return "admin/homepage";
         }
-        return "home";
+        return "homeUser";
     }
 }
 
