@@ -14,7 +14,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -55,6 +57,10 @@ public class FileService {
             System.out.println(nextRow.getRowNum());
             //Create object
             PhysicalExamEntity physicalExamEntity = new PhysicalExamEntity();
+            Date createTime = new Date();
+            physicalExamEntity.setCreatedDate(createTime);
+            physicalExamEntity.setIsActive(true);
+            physicalExamEntity.setYear(2020L);
 //            person.setAdvisory("1");
 //            person.setBloodAnalysis("2");
 //            iPersonRepository.save(person);
@@ -88,10 +94,10 @@ public class FileService {
 //                        person.setPersonName(getCellValue(cell).toString());
                         break;
                     case Const.ReadFile.COLUMN_INDEX_5:
-                        physicalExamEntity.setHeight(Long.valueOf(getCellValue(cell).toString()));
+                        physicalExamEntity.setHeight((long) Double.parseDouble(getCellValue(cell).toString()));
                         break;
                     case Const.ReadFile.COLUMN_INDEX_6:
-                        physicalExamEntity.setWeight(Long.valueOf(getCellValue(cell).toString()));
+                        physicalExamEntity.setWeight((long) Double.parseDouble(getCellValue(cell).toString()));
                         break;
                     case Const.ReadFile.COLUMN_INDEX_7:
                         physicalExamEntity.setBloodPressure(getCellValue(cell).toString());
@@ -130,19 +136,19 @@ public class FileService {
                         physicalExamEntity.setHemoglobin(Double.valueOf(getCellValue(cell).toString()));
                         break;
                     case Const.ReadFile.COLUMN_INDEX_19:
-                        physicalExamEntity.setPlateletNumber(Long.valueOf(getCellValue(cell).toString()));
+                        physicalExamEntity.setPlateletNumber((long) Double.parseDouble(getCellValue(cell).toString()));
                         break;
                     case Const.ReadFile.COLUMN_INDEX_20:
-                        physicalExamEntity.setBloodUrea(Long.valueOf(getCellValue(cell).toString()));
+                        physicalExamEntity.setBloodUrea((long) Double.parseDouble(getCellValue(cell).toString()));
                         break;
                     case Const.ReadFile.COLUMN_INDEX_21:
-                        physicalExamEntity.setBloodCreatinine(Long.valueOf(getCellValue(cell).toString()));
+                        physicalExamEntity.setBloodCreatinine((long) Double.parseDouble(getCellValue(cell).toString()));
                         break;
                     case Const.ReadFile.COLUMN_INDEX_22:
                         physicalExamEntity.setHepatitisB(getCellValue(cell).toString());
                         break;
                     case Const.ReadFile.COLUMN_INDEX_23:
-                        physicalExamEntity.setHealthType(Long.valueOf(getCellValue(cell).toString()));
+                        physicalExamEntity.setHealthType((long) Double.parseDouble(getCellValue(cell).toString()));
                         break;
                     case Const.ReadFile.COLUMN_INDEX_24:
                         physicalExamEntity.setAdvisory(getCellValue(cell).toString());
