@@ -125,4 +125,11 @@ public class AdminController {
         return "redirect:/admin/general-profiles";
     }
 
+
+    //Manage examination
+    @GetMapping("/manage-examination")
+    String getAllExamination(Model model) {
+        model.addAttribute("allExaminations", permitService.findAllExamination());
+        return "admin/examinations";
+    }
 }

@@ -1,14 +1,9 @@
 package application.service;
 
-import application.entity.PhysicalExamEntity;
-import application.entity.RoleEntity;
-import application.entity.UserEntity;
-import application.entity.UserRoleEntity;
+import application.entity.*;
 import application.entity.id.UserRoleId;
-import application.repository.IPhysicalExamRepository;
-import application.repository.IRoleRepository;
-import application.repository.IUserRepository;
-import application.repository.IUserRoleRepository;
+import application.repository.*;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -26,19 +21,22 @@ public class PermitService {
     private final IPhysicalExamRepository physicalExamRepository;
     private final IUserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final IExaminationRepository examinationRepository;
 
     public PermitService(IUserRepository iUserRepository,
                          UserService userService,
                          IRoleRepository roleRepository,
                          IPhysicalExamRepository physicalExamRepository,
                          IUserRoleRepository userRoleRepository,
-                         PasswordEncoder passwordEncoder) {
+                         PasswordEncoder passwordEncoder,
+                         IExaminationRepository examinationRepository) {
         this.iUserRepository = iUserRepository;
         this.userService = userService;
         this.roleRepository = roleRepository;
         this.physicalExamRepository = physicalExamRepository;
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.examinationRepository = examinationRepository;
     }
 
     public Map<Long, List<RoleEntity>> getPermit() {
@@ -97,5 +95,10 @@ public class PermitService {
     public void saveUpdateUserRole(UserRoleEntity input) {
         Optional<UserRoleEntity> optional = userRoleRepository.findUserRoleOfUser(input.getId().getUserId());
 //        userRoleRepository.save(userRoleEntity);
+    }
+
+    public List<ExaminationEntity> findAllExamination() {
+        Sort mSort = Sort.by(Sort.Order.desc("createdDate"));
+        return examinationRepository.findAll(mSort);
     }
 }
