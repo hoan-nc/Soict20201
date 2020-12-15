@@ -103,7 +103,15 @@ public class PermitService {
         return examinationRepository.findAll(mSort);
     }
 
-    public void saveNewExamination(ExaminationEntity examinationEntity) {
+    public ExaminationEntity findExaminationById(Long examinationId) {
+        Optional<ExaminationEntity> optional = examinationRepository.findById(examinationId);
+        if (!optional.isPresent()) {
+            throw new RuntimeException("Không tìm thấy đợt khám");
+        }
+        return optional.get();
+    }
+
+    public void saveOrUpdateExamination(ExaminationEntity examinationEntity) {
         examinationRepository.save(examinationEntity);
     }
 

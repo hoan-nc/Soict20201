@@ -8,7 +8,6 @@ import application.service.UserService;
 import application.service.file.FileService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +27,7 @@ public class AdminController {
         this.userService = userService;
     }
 
+    //START MANAGE UPLOAD FILE
     @GetMapping("/upload")
     String index(Model model) {
         model.addAttribute("fileUpload", new FileUpload());
@@ -44,7 +44,9 @@ public class AdminController {
         model.addAttribute("listPerson", fileService.readFile(fileUpload.getExcelName()));
         return "admin/fileProcess";
     }
+    //END MANAGE UPLOAD FILE
 
+    //START MANAGE PERMISSION ROLE
     @GetMapping("/users-permissions")
     String getPermit(Model model) {
         model.addAttribute("allUserRoles", permitService.getAllUserRoles());
@@ -77,46 +79,13 @@ public class AdminController {
         permitService.saveUpdateUserRole(userRoleEntity);
         return "redirect:/admin/users-permissions";
     }
+    //END MANAGE PERMISSION ROLE
 
+    //START MANAGE PROFILES
     @GetMapping("/general-profiles")
     String getGeneralProfiles(Model model) {
         model.addAttribute("allPhysical", permitService.getAllPhysicalExam());
         return "admin/generalProfile";
-    }
-
-    @GetMapping("/general-profiles/new")
-    public String showAddPhysicalExamForm(PhysicalExamEntity entity) {
-        return "admin/addPhysicalExam";
-    }
-
-    @PostMapping("/general-profiles/add")
-    public String addStudent(@Valid PhysicalExamEntity entity, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "admin/addPhysicalExam";
-        }
-        permitService.savePhysicalExam(entity);
-        return "redirect:/admin/general-profiles";
-    }
-
-    @GetMapping("/general-profiles/edit/{id}")
-    String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        PhysicalExamEntity physicalExamEntity = permitService.findPhysicalExamById(id);
-        model.addAttribute("physicalExam", physicalExamEntity);
-        return "admin/updatePhysicalExam";
-    }
-
-    @PostMapping("/general-profiles/update/{id}")
-    public String updateStudent(@PathVariable("id") Long id,
-                                @Valid PhysicalExamEntity physicalExamEntity,
-                                BindingResult result,
-                                Model model) {
-        if (result.hasErrors()) {
-            physicalExamEntity.setId(id);
-            return "update-physical-exam";
-        }
-        permitService.savePhysicalExam(physicalExamEntity);
-        model.addAttribute("allPhysical", permitService.getAllPhysicalExam());
-        return "redirect:/admin/general-profiles";
     }
 
     @RequestMapping(value = "/general-profiles/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
@@ -125,16 +94,16 @@ public class AdminController {
         permitService.deletePhysicalExam(physicalExamEntity);
         return "redirect:/admin/general-profiles";
     }
+    //END MANAGE PROFILES
 
-
-    //Manage examination
+    //START MANAGE EXAMINATION
     @GetMapping("/manage-examination")
     String getAllExamination(Model model) {
         model.addAttribute("allExaminations", permitService.findAllExamination());
         return "admin/examinations";
     }
 
-    @RequestMapping(value = "/manage-examination/addNew", method = RequestMethod.POST)
+    @RequestMapping(value = "/manage-examination/new", method = RequestMethod.POST)
     String addExamination(ExaminationForm examinationForm) {
         Long year = Long.valueOf(examinationForm.getCreatedDate().substring(6));
         ExaminationEntity examinationEntity = ExaminationEntity.builder()
@@ -143,7 +112,23 @@ public class AdminController {
                 .createdDate(examinationForm.getCreatedDate().trim())
                 .build();
 
-        permitService.saveNewExamination(examinationEntity);
+        permitService.saveOrUpdateExamination(examinationEntity);
         return "redirect:/admin/manage-examination";
     }
+
+    @RequestMapping(value = "/manage-examination/update", method = RequestMethod.POST)
+    String addExamination(ExaminationEntity examinationEntity) {
+        Long year = Long.valueOf(examinationEntity.getCreatedDate().substring(6));
+        examinationEntity.setYear(year);
+
+        permitService.saveOrUpdateExamination(examinationEntity);
+        return "redirect:/admin/manage-examination";
+    }
+
+    @RequestMapping(value = "/manage-examination/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ExaminationEntity findExaminationById(@PathVariable("id") Long examinationId) {
+        return permitService.findExaminationById(examinationId);
+    }
+    //END MANAGE EXAMINATION
 }
