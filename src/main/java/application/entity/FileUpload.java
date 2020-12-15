@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class FileUpload {
     private String excelName;
     private String imgName;
-
+    private ExaminationEntity examination;
 }

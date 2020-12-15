@@ -1,11 +1,18 @@
 package application.service.file;
 
+import application.entity.ExaminationEntity;
+import application.entity.FileUpload;
+import application.entity.UserEntity;
+import application.repository.IExaminationRepository;
+import application.repository.IUserRepository;
+import application.service.UserService;
 import application.utils.Const;
 import application.entity.PhysicalExamEntity;
 import application.repository.IPhysicalExamRepository;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,18 +32,19 @@ import java.util.List;
 @Service
 public class FileService {
     private final IPhysicalExamRepository iPhysicalExamRepository;
+    private final UserService userService;
 
     @Value("${spring.folder_upload_files:}")
     private Path rootLocation;
 
-    public FileService(IPhysicalExamRepository iPhysicalExamRepository) {
+    public FileService(IPhysicalExamRepository iPhysicalExamRepository, UserService userService) {
         this.iPhysicalExamRepository = iPhysicalExamRepository;
+        this.userService = userService;
     }
 
-    public List<PhysicalExamEntity> readFile(String fileName) throws IOException {
+    public List<PhysicalExamEntity> readFile(FileUpload fileUpload, UserEntity userEntity) throws IOException {
         List<PhysicalExamEntity> lstPersonEntities = new ArrayList<>();
-
-        String excelFilePath = rootLocation + "/" + fileName;
+        String excelFilePath = rootLocation + "/" + fileUpload.getExcelName();
         File file = new File(excelFilePath);
         // Get file
         InputStream inputStream = new FileInputStream(file);
@@ -60,10 +69,9 @@ public class FileService {
             Date createTime = new Date();
             physicalExamEntity.setCreatedDate(createTime);
             physicalExamEntity.setIsActive(true);
-            physicalExamEntity.setYear(2020L);
-//            person.setAdvisory("1");
-//            person.setBloodAnalysis("2");
-//            iPersonRepository.save(person);
+            physicalExamEntity.setYear(fileUpload.getExamination().getYear());
+            physicalExamEntity.setExamination(fileUpload.getExamination());
+            physicalExamEntity.setUser(userEntity);
             // Get all cells
             Iterator<Cell> cellIterator = nextRow.cellIterator();
             // Read cells and set value for book object

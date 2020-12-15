@@ -6,6 +6,9 @@ import application.entity.*;
 import application.service.PermitService;
 import application.service.UserService;
 import application.service.file.FileService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -29,8 +33,9 @@ public class AdminController {
     }
 
     @GetMapping("/upload")
-    String index(Model model) {
+    String index(Model model,final Principal principal) { ;
         model.addAttribute("fileUpload", new FileUpload());
+        model.addAttribute("allExaminations", permitService.findAllExamination());
         return "admin/upload";
     }
 
@@ -41,7 +46,8 @@ public class AdminController {
 
     @PostMapping("/fileProcess")
     String getUploadResult(Model model, @Valid @ModelAttribute("fileUpload") FileUpload fileUpload, final Principal principal) throws IOException {
-        model.addAttribute("listPerson", fileService.readFile(fileUpload.getExcelName()));
+        UserEntity userEntity = userService.getByUsername(principal.getName());
+        model.addAttribute("listPerson", fileService.readFile(fileUpload, userEntity));
         return "admin/fileProcess";
     }
 

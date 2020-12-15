@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -120,5 +121,7 @@ public class UserService {
     public List<PhysicalExamEntity> getAllPhysicalExamByUser(String username) {
         return physicalExamRepository.findAllByUser(username);
     }
-
+   public UserEntity getByUsername(String userName){
+        return userRepository.findByUserName(userName);
+   }
 }
