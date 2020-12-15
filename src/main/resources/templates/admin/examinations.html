@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:include="fragments/sidebar :: common-css-admin">
+    <meta name="csrf-token" content="{{csrf_token()}}"/>
+
 </head>
 
 <body id="page-top">
@@ -59,11 +61,12 @@
                                         <td th:text="${u.name}"></td>
                                         <td th:text="${u.createdDate}"></td>
                                         <td>
-                                            <a th:href="@{/admin/general-profiles/edit/{id}(id=${u.id})}"
+                                            <a th:href="@{/admin/manage-examination/{id}(id=${u.id})}"
+                                               id="btnEditExaminationRow"
                                                class="btn btn-warning">Sửa</a>
 
                                             <a th:href="@{/admin/general-profiles/delete/{id}(id=${u.id})}"
-                                               id="deleteProfileButtonRow"
+                                               id="btnDeleteExaminationRow"
                                                class="btn btn-danger">Xóa</a>
                                         </td>
                                     </tr>
@@ -76,7 +79,7 @@
 
                 <div class="modal fade" id="addExaminationModal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <form action="#" th:action="@{/admin/manage-examination/addNew}" method="post">
+                    <form action="#" th:action="@{/admin/manage-examination/new}" method="post">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -99,6 +102,41 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
                                     <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal fade" id="editExaminationModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form action="#" th:action="@{/admin/manage-examination/update}" method="post">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Chỉnh sửa đợt khám</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="nameEdit" class="col-form-label">Mã đợt khám:</label>
+                                        <input type="text" class="form-control" required id="idEdit" name="id" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nameEdit" class="col-form-label">Tên đợt khám:</label>
+                                        <input type="text" class="form-control" required id="nameEdit" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="createdDateEdit" class="col-form-label">Thời gian:</label>
+                                        <input type="text" class="form-control" required id="createdDateEdit"
+                                               name="createdDate">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +185,8 @@
 <script th:src="@{~/js/datatables/dataTables.bootstrap4.min.js}"></script>
 
 <!-- Page level custom scripts -->
-<script th:src="@{~/js/demo/datatables-demo.js}"></script>
+<script type="text/javascript" src="../static/js/demo/datatables-demo.js"
+        th:src="@{~/js/demo/datatables-demo.js}"></script>
 </body>
 
 </html>
