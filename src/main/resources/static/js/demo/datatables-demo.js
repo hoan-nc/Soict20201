@@ -18,4 +18,20 @@ $(document).ready(function () {
     });
 
 
+    //EDIT DEPARTMENT EXAM MODAL
+    $('#content #btnEditDepartmentExamRow').on('click', function (event) {
+        event.preventDefault();
+        let href = $(this).attr('href');
+        console.log(href);
+        $.get(href, function (departmentExamEntity) {
+            console.log('departmentExamEntity', departmentExamEntity)
+            $('#editDepartmentExamModal #idEdit').val(departmentExamEntity.id);
+            $('#editDepartmentExamModal #nameEdit').val(departmentExamEntity.name);
+            $('#editDepartmentExamModal #phoneNumberEdit').val(departmentExamEntity.phoneNumber);
+            $('#editDepartmentExamModal #addressEdit').val(departmentExamEntity.address);
+        });
+        $('#editDepartmentExamModal').modal();
+    });
+
+
 });
