@@ -153,13 +153,13 @@ public class AdminController {
                 .build();
 
         permitService.saveOrUpdateDepartmentExam(departmentExamEntity);
-        return "redirect:/admin/manage-examination";
+        return "redirect:/admin/manage-department-exam";
     }
 
     @RequestMapping(value = "/manage-department-exam/update", method = RequestMethod.POST)
     String addDepartmentExam(DepartmentExamEntity departmentExamEntity) {
         permitService.saveOrUpdateDepartmentExam(departmentExamEntity);
-        return "redirect:/admin/manage-examination";
+        return "redirect:/admin/manage-department-exam";
     }
 
     @RequestMapping(value = "/manage-department-exam/{id}", method = RequestMethod.GET)
