@@ -33,6 +33,10 @@ public class PhysicalExamEntity implements Serializable {
     @JoinColumn(name = "examination_id", referencedColumnName = "id")
     private ExaminationEntity examination;
 
+    @ManyToOne
+    @JoinColumn(name = "department_exam_id", referencedColumnName = "id")
+    private DepartmentExamEntity departmentExam;
+
     @Basic
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;

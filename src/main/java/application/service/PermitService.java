@@ -22,6 +22,7 @@ public class PermitService {
     private final IUserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
     private final IExaminationRepository examinationRepository;
+    private final IDepartmentExamRepository departmentExamRepository;
 
     public PermitService(IUserRepository iUserRepository,
                          UserService userService,
@@ -29,7 +30,8 @@ public class PermitService {
                          IPhysicalExamRepository physicalExamRepository,
                          IUserRoleRepository userRoleRepository,
                          PasswordEncoder passwordEncoder,
-                         IExaminationRepository examinationRepository) {
+                         IExaminationRepository examinationRepository,
+                         IDepartmentExamRepository departmentExamRepository) {
         this.iUserRepository = iUserRepository;
         this.userService = userService;
         this.roleRepository = roleRepository;
@@ -37,6 +39,7 @@ public class PermitService {
         this.userRoleRepository = userRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.examinationRepository = examinationRepository;
+        this.departmentExamRepository = departmentExamRepository;
     }
 
     public Map<Long, List<RoleEntity>> getPermit() {
@@ -115,5 +118,23 @@ public class PermitService {
         examinationRepository.save(examinationEntity);
     }
 
+
+    //Department Exam
+    public List<DepartmentExamEntity> findAllDepartmentExams() {
+        Sort mSort = Sort.by(Sort.Order.desc("id"));
+        return departmentExamRepository.findAll(mSort);
+    }
+
+    public DepartmentExamEntity findDepartmentExamById(Long departmentExamId) {
+        Optional<DepartmentExamEntity> optional = departmentExamRepository.findById(departmentExamId);
+        if (!optional.isPresent()) {
+            throw new RuntimeException("Không tìm thấy đơn vị khám");
+        }
+        return optional.get();
+    }
+
+    public void saveOrUpdateDepartmentExam(DepartmentExamEntity departmentExamEntity) {
+        departmentExamRepository.save(departmentExamEntity);
+    }
 
 }
