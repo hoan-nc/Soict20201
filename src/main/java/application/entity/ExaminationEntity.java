@@ -28,7 +28,7 @@ public class ExaminationEntity implements Serializable {
 
     @Basic
     @Column(name = "created_date", nullable = false)
-    private Date createdDate;
+    private String createdDate;
 
     @Column(name = "year", nullable = false)
     private Long year;

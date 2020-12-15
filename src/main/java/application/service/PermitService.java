@@ -97,8 +97,15 @@ public class PermitService {
 //        userRoleRepository.save(userRoleEntity);
     }
 
+    //Examination
     public List<ExaminationEntity> findAllExamination() {
-        Sort mSort = Sort.by(Sort.Order.desc("createdDate"));
+        Sort mSort = Sort.by(Sort.Order.desc("id"));
         return examinationRepository.findAll(mSort);
     }
+
+    public void saveNewExamination(ExaminationEntity examinationEntity) {
+        examinationRepository.save(examinationEntity);
+    }
+
+
 }

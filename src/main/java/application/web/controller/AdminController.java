@@ -1,5 +1,6 @@
 package application.web.controller;
 
+import application.domain.ExaminationForm;
 import application.domain.UserRoleForm;
 import application.entity.*;
 import application.service.PermitService;
@@ -131,5 +132,18 @@ public class AdminController {
     String getAllExamination(Model model) {
         model.addAttribute("allExaminations", permitService.findAllExamination());
         return "admin/examinations";
+    }
+
+    @RequestMapping(value = "/manage-examination/addNew", method = RequestMethod.POST)
+    String addExamination(ExaminationForm examinationForm) {
+        Long year = Long.valueOf(examinationForm.getCreatedDate().substring(6));
+        ExaminationEntity examinationEntity = ExaminationEntity.builder()
+                .year(year)
+                .name(examinationForm.getName().trim())
+                .createdDate(examinationForm.getCreatedDate().trim())
+                .build();
+
+        permitService.saveNewExamination(examinationEntity);
+        return "redirect:/admin/manage-examination";
     }
 }
