@@ -79,11 +79,8 @@
                 <div id="collapseUtilitiesAdmin" class="collapse" aria-labelledby="headingUtilities"
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!--                    <h6 class="collapse-header">Custom Utilities:</h6>-->
-                        <a class="collapse-item" href="utilities-color.html">Thống kê 1</a>
-                        <a class="collapse-item" href="utilities-border.html">Thống kê 2</a>
-                        <a class="collapse-item" href="utilities-animation.html">Thống kê 3</a>
-                        <a class="collapse-item" href="utilities-other.html">Thống kê khác</a>
+                        <a class="collapse-item" th:href="@{~/admin/statistic-height-page}">Chiều cao</a>
+                        <a class="collapse-item" th:href="@{~/admin/statistic-weight-page}">Cân nặng</a>
                     </div>
                 </div>
             </li>
@@ -130,16 +127,13 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilitiesUser"
                aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <span>Phân tích các chỉ số</span>
+                <span>Thống kê chung</span>
             </a>
             <div id="collapseUtilitiesUser" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <!--                    <h6 class="collapse-header">Custom Utilities:</h6>-->
-                    <a class="collapse-item" href="utilities-color.html">Thống kê 1</a>
-                    <a class="collapse-item" href="utilities-border.html">Thống kê 2</a>
-                    <a class="collapse-item" href="utilities-animation.html">Thống kê 3</a>
-                    <a class="collapse-item" href="utilities-other.html">Thống kê khác</a>
+                    <a class="collapse-item" th:href="@{~/user/statistic-height-page}">Chiều cao</a>
+                    <a class="collapse-item" th:href="@{~/user/statistic-weight-page}">Cân nặng</a>
                 </div>
             </div>
         </li>

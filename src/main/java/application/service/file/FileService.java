@@ -1,18 +1,14 @@
 package application.service.file;
 
-import application.entity.ExaminationEntity;
 import application.entity.FileUpload;
 import application.entity.UserEntity;
-import application.repository.IExaminationRepository;
-import application.repository.IUserRepository;
-import application.service.UserService;
+import application.service.impl.UserServiceImpl;
 import application.utils.Const;
 import application.entity.PhysicalExamEntity;
 import application.repository.IPhysicalExamRepository;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +17,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -32,14 +26,14 @@ import java.util.List;
 @Service
 public class FileService {
     private final IPhysicalExamRepository iPhysicalExamRepository;
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
     @Value("${spring.folder_upload_files:}")
     private Path rootLocation;
 
-    public FileService(IPhysicalExamRepository iPhysicalExamRepository, UserService userService) {
+    public FileService(IPhysicalExamRepository iPhysicalExamRepository, UserServiceImpl userServiceImpl) {
         this.iPhysicalExamRepository = iPhysicalExamRepository;
-        this.userService = userService;
+        this.userServiceImpl = userServiceImpl;
     }
 
     public List<PhysicalExamEntity> readFile(FileUpload fileUpload, UserEntity userEntity) throws IOException {

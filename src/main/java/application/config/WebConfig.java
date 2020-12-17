@@ -3,7 +3,6 @@ package application.config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,9 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-//import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-//import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
-//import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
@@ -25,11 +21,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     private static final Logger logger = LogManager.getLogger(WebConfig.class);
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
-    @Autowired
-    private ThymeleafProperties properties;
+    private final ThymeleafProperties properties;
 
     @Value("${spring.thymeleaf.templates_root:}")
     private String templatesRoot;
+
+    public WebConfig(ThymeleafProperties properties) {
+        this.properties = properties;
+    }
 
     @Bean
     public ITemplateResolver defaultTemplateResolver() {
@@ -51,8 +50,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean(name = "passwordEncoder")
     public PasswordEncoder getPasswordEncoder() {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 
 
@@ -81,32 +79,5 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
-//
-//    @Bean
-//    public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
-//        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-//
-//        tomcat.addConnectorCustomizers((TomcatConnectorCustomizer) connector -> {
-//            if ((connector.getProtocolHandler() instanceof AbstractHttp11Protocol<?>)) {
-//                ((AbstractHttp11Protocol<?>) connector.getProtocolHandler()).setMaxSwallowSize(-1);
-//            }
-//        });
-//        return tomcat;
-//    }
-//
-//    /**
-//     * Fix bean cookie
-//     *
-//     * @return
-//     */
-//    @Bean
-//    public EmbeddedServletContainerCustomizer customizer() {
-//        return container -> {
-//            if (container instanceof TomcatEmbeddedServletContainerFactory) {
-//                TomcatEmbeddedServletContainerFactory tomcat = (TomcatEmbeddedServletContainerFactory) container;
-//                tomcat.addContextCustomizers(context -> context.setCookieProcessor(new LegacyCookieProcessor()));
-//            }
-//        };
-//    }
 
 }

@@ -38,7 +38,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         logger.info("-----configure(HttpSecurity http)");
-
         http.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
@@ -58,7 +57,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         logger.info("-----configure(WebSecurity web)");
         web.ignoring()
                 .antMatchers("/js/**")

@@ -2,30 +2,32 @@ package application.web.controller;
 
 import application.entity.UserEntity;
 import application.service.UserService;
-import application.utils.StatusRegisterUserEnum;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import application.service.impl.UserAuthenticatorServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Controller
+@Slf4j
 public class UserController {
-
-    private static Logger logger = LoggerFactory.getLogger(UserController.class);
-
     private final UserService userService;
+    private final UserAuthenticatorServiceImpl userAuthenticatorService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserAuthenticatorServiceImpl userAuthenticatorService) {
         this.userService = userService;
+        this.userAuthenticatorService = userAuthenticatorService;
     }
 
     @GetMapping(path = "/register-user")
@@ -36,8 +38,7 @@ public class UserController {
 
     @RequestMapping(path = "/register-user", method = RequestMethod.POST)
     public String registerNewUser(@Valid @ModelAttribute("user") UserEntity userEntity) {
-        StatusRegisterUserEnum statusRegisterUserEnum = userService.registerNewUser(userEntity);
-        logger.info(statusRegisterUserEnum.toString());
+        userService.registerNewUser(userEntity);
         return "redirect:/home";
     }
 
@@ -53,5 +54,34 @@ public class UserController {
         model.addAttribute("allMyPhysical", userService.getAllPhysicalExamByUser(username));
         return "myProfile";
     }
+
+    //START STATISTIC
+    @GetMapping("/user/statistic-height-page")
+    String getStaticHeight(Model model) {
+        Map<String, Double> mapData = userService.getStatisticHeightOfUser(userAuthenticatorService.getUsernameLogin());
+        model.addAttribute("mapStatisticHeight", mapData);
+        return "/admin/statisticHeight";
+    }
+
+    @GetMapping("/user/statistic-height")
+    public ResponseEntity<Map<String, Double>> getStatisticHeightPieChart() {
+        Map<String, Double> mapDataHeight = userService.getStatisticHeightOfUser(userAuthenticatorService.getUsernameLogin());
+        return new ResponseEntity<>(mapDataHeight, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/statistic-weight-page")
+    String getStaticWeight(Model model) {
+        Map<String, Double> mapData = userService.getStatisticWeightOfUser(userAuthenticatorService.getUsernameLogin());
+        model.addAttribute("mapStatisticWeight", mapData);
+        return "admin/statisticWeight";
+    }
+
+    @GetMapping("/user/statistic-weight")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticWeightPieChart() {
+        TreeMap<String, Double> mapData = userService.getStatisticWeightOfUser(userAuthenticatorService.getUsernameLogin());
+        return new ResponseEntity<>(mapData, HttpStatus.OK);
+    }
+
+    //END STATISTIC
 
 }
