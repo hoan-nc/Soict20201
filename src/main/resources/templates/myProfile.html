@@ -51,7 +51,8 @@
                                     <th>Họ và tên</th>
                                     <th>Lớp</th>
                                     <th>Đợt khám</th>
-                                    <th>Phân loại sức khỏe</th>
+                                    <th>Đơn vị khám</th>
+                                    <th>Loại SK</th>
                                     <th>Tư vấn</th>
                                     <th>Hành động</th>
                                 </tr>
@@ -64,7 +65,8 @@
                                         <td th:text="${u.user.fullName}"></td>
                                         <td th:text="${u.user.className}"></td>
                                         <td th:text="${u.examination.name}"></td>
-                                        <td th:text="${u.healthType}"></td>
+                                        <td th:text="${u.departmentExam.name}"></td>
+                                        <td th:text="'Loại ' + ${u.healthType}"></td>
                                         <td th:text="${u.advisory}"></td>
                                         <td>
                                             <a th:href="@{/admin/general-profiles/edit/{id}(id=${u.id})}"

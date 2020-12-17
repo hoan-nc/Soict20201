@@ -34,6 +34,7 @@ public class AdminController {
         ;
         model.addAttribute("fileUpload", new FileUpload());
         model.addAttribute("allExaminations", permitService.findAllExamination());
+        model.addAttribute("allDepartmentExams", permitService.findAllDepartmentExams());
         return "admin/upload";
     }
 

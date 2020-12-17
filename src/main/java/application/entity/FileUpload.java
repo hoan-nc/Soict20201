@@ -14,4 +14,5 @@ public class FileUpload {
     private String excelName;
     private String imgName;
     private ExaminationEntity examination;
+    private DepartmentExamEntity department;
 }

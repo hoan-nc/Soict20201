@@ -71,6 +71,7 @@ public class FileService {
             physicalExamEntity.setIsActive(true);
             physicalExamEntity.setYear(fileUpload.getExamination().getYear());
             physicalExamEntity.setExamination(fileUpload.getExamination());
+            physicalExamEntity.setDepartmentExam(fileUpload.getDepartment());
             physicalExamEntity.setUser(userEntity);
             // Get all cells
             Iterator<Cell> cellIterator = nextRow.cellIterator();
