@@ -2,7 +2,6 @@
 package application.web.controller;
 
 import application.service.file.FileStorageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,8 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/link/")
 public class LinkController {
 
-    @Autowired
-    FileStorageService storageService;
+    private final FileStorageService storageService;
+
+    public LinkController(FileStorageService storageService) {
+        this.storageService = storageService;
+    }
 
     @GetMapping("/{filename:.+}")
     @ResponseBody
@@ -26,7 +28,7 @@ public class LinkController {
         Resource file = storageService.loadFile(filename);
         MediaType type = MediaType.ALL;
 
-        if(filename.toLowerCase().endsWith("png")) {
+        if (filename.toLowerCase().endsWith("png")) {
             type = MediaType.IMAGE_PNG;
         } else if (filename.toLowerCase().endsWith("jpg") || filename.toLowerCase().endsWith("jpeg")) {
             type = MediaType.IMAGE_JPEG;

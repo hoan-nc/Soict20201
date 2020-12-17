@@ -4,9 +4,12 @@ import application.domain.DepartmentExamForm;
 import application.domain.ExaminationForm;
 import application.domain.UserRoleForm;
 import application.entity.*;
-import application.service.PermitService;
+import application.service.AdminService;
 import application.service.UserService;
 import application.service.file.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,27 +17,30 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    private final PermitService permitService;
     private final FileService fileService;
+    private final AdminService adminService;
     private final UserService userService;
 
-    public AdminController(PermitService permitService, FileService fileService, UserService userService) {
-        this.permitService = permitService;
+    @Autowired
+    public AdminController(FileService fileService, AdminService adminService, UserService userService) {
         this.fileService = fileService;
+        this.adminService = adminService;
         this.userService = userService;
     }
+
 
     //START MANAGE UPLOAD FILE
     @GetMapping("/upload")
     String index(Model model, final Principal principal) {
         ;
         model.addAttribute("fileUpload", new FileUpload());
-        model.addAttribute("allExaminations", permitService.findAllExamination());
-        model.addAttribute("allDepartmentExams", permitService.findAllDepartmentExams());
+        model.addAttribute("allExaminations", adminService.findAllExamination());
         return "admin/upload";
     }
 
@@ -54,8 +60,8 @@ public class AdminController {
     //START MANAGE PERMISSION ROLE
     @GetMapping("/users-permissions")
     String getPermit(Model model) {
-        model.addAttribute("allUserRoles", permitService.getAllUserRoles());
-        model.addAttribute("roles", permitService.getAllRole());
+        model.addAttribute("allUserRoles", adminService.getAllUserRoles());
+        model.addAttribute("roles", adminService.getAllRole());
         model.addAttribute("userRoleUpdate", new UserRoleEntity());
         return "admin/permission";
     }
@@ -73,7 +79,7 @@ public class AdminController {
                 .id(userRoleForm.getRoleId())
                 .build());
 
-        permitService.saveNewUserRole(userRoleEntity);
+        adminService.saveNewUserRole(userRoleEntity);
         return "redirect:/admin/users-permissions";
     }
 
@@ -81,7 +87,7 @@ public class AdminController {
     String updateUserPermission(Long userId, Long roleId,
                                 @Valid @ModelAttribute("userRoleUpdate") UserRoleEntity userRoleEntity) {
         userRoleEntity.getId().setUserId(userId);
-        permitService.saveUpdateUserRole(userRoleEntity);
+        adminService.saveUpdateUserRole(userRoleEntity);
         return "redirect:/admin/users-permissions";
     }
     //END MANAGE PERMISSION ROLE
@@ -89,14 +95,14 @@ public class AdminController {
     //START MANAGE PROFILES
     @GetMapping("/general-profiles")
     String getGeneralProfiles(Model model) {
-        model.addAttribute("allPhysical", permitService.getAllPhysicalExam());
+        model.addAttribute("allPhysical", adminService.getAllPhysicalExam());
         return "admin/generalProfile";
     }
 
     @RequestMapping(value = "/general-profiles/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String deletePhysicalExam(@PathVariable("id") Long id) {
-        PhysicalExamEntity physicalExamEntity = permitService.findPhysicalExamById(id);
-        permitService.deletePhysicalExam(physicalExamEntity);
+        PhysicalExamEntity physicalExamEntity = adminService.findPhysicalExamById(id);
+        adminService.deletePhysicalExam(physicalExamEntity);
         return "redirect:/admin/general-profiles";
     }
     //END MANAGE PROFILES
@@ -104,7 +110,7 @@ public class AdminController {
     //START MANAGE EXAMINATION
     @GetMapping("/manage-examination")
     String getAllExamination(Model model) {
-        model.addAttribute("allExaminations", permitService.findAllExamination());
+        model.addAttribute("allExaminations", adminService.findAllExamination());
         return "admin/examinations";
     }
 
@@ -117,7 +123,7 @@ public class AdminController {
                 .createdDate(examinationForm.getCreatedDate().trim())
                 .build();
 
-        permitService.saveOrUpdateExamination(examinationEntity);
+        adminService.saveOrUpdateExamination(examinationEntity);
         return "redirect:/admin/manage-examination";
     }
 
@@ -126,21 +132,21 @@ public class AdminController {
         Long year = Long.valueOf(examinationEntity.getCreatedDate().substring(6));
         examinationEntity.setYear(year);
 
-        permitService.saveOrUpdateExamination(examinationEntity);
+        adminService.saveOrUpdateExamination(examinationEntity);
         return "redirect:/admin/manage-examination";
     }
 
     @RequestMapping(value = "/manage-examination/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ExaminationEntity findExaminationById(@PathVariable("id") Long examinationId) {
-        return permitService.findExaminationById(examinationId);
+        return adminService.findExaminationById(examinationId);
     }
     //END MANAGE EXAMINATION
 
     //START MANAGE DEPARTMENT EXAM
     @GetMapping("/manage-department-exam")
     String getAllDepartmentExams(Model model) {
-        model.addAttribute("allDepartmentExams", permitService.findAllDepartmentExams());
+        model.addAttribute("allDepartmentExams", adminService.findAllDepartmentExams());
         return "admin/departmentExams";
     }
 
@@ -153,21 +159,47 @@ public class AdminController {
                 .phoneNumber(departmentExamForm.getPhoneNumber().trim())
                 .build();
 
-        permitService.saveOrUpdateDepartmentExam(departmentExamEntity);
+        adminService.saveOrUpdateDepartmentExam(departmentExamEntity);
         return "redirect:/admin/manage-department-exam";
     }
 
     @RequestMapping(value = "/manage-department-exam/update", method = RequestMethod.POST)
     String addDepartmentExam(DepartmentExamEntity departmentExamEntity) {
-        permitService.saveOrUpdateDepartmentExam(departmentExamEntity);
+        adminService.saveOrUpdateDepartmentExam(departmentExamEntity);
         return "redirect:/admin/manage-department-exam";
     }
 
     @RequestMapping(value = "/manage-department-exam/{id}", method = RequestMethod.GET)
     @ResponseBody
     public DepartmentExamEntity findDepartmentExamById(@PathVariable("id") Long departmentExamId) {
-        return permitService.findDepartmentExamById(departmentExamId);
+        return adminService.findDepartmentExamById(departmentExamId);
     }
     //END MANAGE DEPARTMENT EXAM
 
+    //START STATISTIC
+    @GetMapping("/statistic-height-page")
+    String getStaticHeight(Model model) {
+        Map<String, Double> mapData = adminService.getStatisticHeight();
+        model.addAttribute("mapStatisticHeight", mapData);
+        return "/admin/statisticHeight";
+    }
+
+    @GetMapping("/statistic-height")
+    public ResponseEntity<Map<String, Double>> getStatisticHeightPieChart() {
+        return new ResponseEntity<>(adminService.getStatisticHeight(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-weight-page")
+    String getStaticWeight(Model model) {
+        TreeMap<String, Double> mapData = adminService.getStatisticWeight();
+        model.addAttribute("mapStatisticWeight", mapData);
+        return "admin/statisticWeight";
+    }
+
+    @GetMapping("/statistic-weight")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticWeightPieChart() {
+        return new ResponseEntity<>(adminService.getStatisticWeight(), HttpStatus.OK);
+    }
+
+    //END STATISTIC
 }
