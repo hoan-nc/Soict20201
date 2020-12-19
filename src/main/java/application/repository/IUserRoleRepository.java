@@ -15,4 +15,8 @@ public interface IUserRoleRepository extends JpaRepository<UserRoleEntity, UserR
 
     @Query("select u from UserRoleEntity u where u.id.userId = :id")
     Optional<UserRoleEntity> findUserRoleOfUser(@Param("id") Long userId);
+
+    @Query("delete from UserRoleEntity ur where ur.user.id = :id")
+    void deleteUserRoleByUserId(@Param("id") Long userId);
+
 }

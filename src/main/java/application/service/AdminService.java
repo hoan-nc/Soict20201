@@ -14,6 +14,8 @@ public interface AdminService {
 
     List<UserRoleEntity> getAllUserRoles();
 
+    void deleteUserPermission(Long userId);
+
     List<PhysicalExamEntity> getAllPhysicalExam();
 
     PhysicalExamEntity findPhysicalExamById(Long id);
@@ -32,11 +34,15 @@ public interface AdminService {
 
     void saveOrUpdateExamination(ExaminationEntity examinationEntity);
 
+    void deleteExamination(Long examinationId);
+
     List<DepartmentExamEntity> findAllDepartmentExams();
 
     DepartmentExamEntity findDepartmentExamById(Long departmentExamId);
 
     void saveOrUpdateDepartmentExam(DepartmentExamEntity departmentExamEntity);
+
+    void deleteDepartmentExam(Long departmentExamId);
 
     TreeMap<String, Double> getStatisticHeight();
 

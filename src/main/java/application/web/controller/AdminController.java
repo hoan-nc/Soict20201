@@ -5,6 +5,7 @@ import application.domain.ExaminationForm;
 import application.domain.PhysicalExamForm;
 import application.domain.UserRoleForm;
 import application.entity.*;
+import application.entity.id.UserRoleId;
 import application.service.AdminService;
 import application.service.UserService;
 import application.service.file.FileService;
@@ -62,11 +63,11 @@ public class AdminController {
     String getPermit(Model model) {
         model.addAttribute("allUserRoles", adminService.getAllUserRoles());
         model.addAttribute("roles", adminService.getAllRole());
-        model.addAttribute("userRoleUpdate", new UserRoleEntity());
+        model.addAttribute("roleIdChangeSelected", null);
         return "admin/permission";
     }
 
-    @RequestMapping(value = "/users-permissions/addNew", method = RequestMethod.POST)
+    @RequestMapping(value = "/users-permissions/new", method = RequestMethod.POST)
     String addUserPermission(UserRoleForm userRoleForm) {
         UserRoleEntity userRoleEntity = new UserRoleEntity();
         userRoleEntity.setUser(UserEntity.builder()
@@ -84,10 +85,17 @@ public class AdminController {
     }
 
     @PostMapping(value = "/users-permissions/update")
-    String updateUserPermission(Long userId, Long roleId,
-                                @Valid @ModelAttribute("userRoleUpdate") UserRoleEntity userRoleEntity) {
-        userRoleEntity.getId().setUserId(userId);
+    String updateUserPermission(Long userId, @Valid @ModelAttribute("roleIdChangeSelected") Long roleIdChangeSelected) {
+        UserRoleEntity userRoleEntity = UserRoleEntity.builder()
+                .id(UserRoleId.builder().userId(userId).roleId(roleIdChangeSelected).build())
+                .build();
         adminService.saveUpdateUserRole(userRoleEntity);
+        return "redirect:/admin/users-permissions";
+    }
+
+    @RequestMapping(value = "/users-permissions/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String deleteUserPermission(Long userId) {
+        adminService.deleteUserPermission(userId);
         return "redirect:/admin/users-permissions";
     }
     //END MANAGE PERMISSION ROLE
@@ -109,8 +117,8 @@ public class AdminController {
         return "redirect:/admin/general-profiles";
     }
 
-    @RequestMapping(value = "/general-profiles/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
-    public String deletePhysicalExam(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/general-profiles/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String deletePhysicalExam(Long id) {
         PhysicalExamEntity physicalExamEntity = adminService.findPhysicalExamById(id);
         adminService.deletePhysicalExam(physicalExamEntity);
         return "redirect:/admin/general-profiles";
@@ -151,6 +159,12 @@ public class AdminController {
     public ExaminationEntity findExaminationById(@PathVariable("id") Long examinationId) {
         return adminService.findExaminationById(examinationId);
     }
+
+    @RequestMapping(value = "/manage-examination/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String deleteExamination(Long id) {
+        adminService.deleteExamination(id);
+        return "redirect:/admin/manage-examination";
+    }
     //END MANAGE EXAMINATION
 
     //START MANAGE DEPARTMENT EXAM
@@ -183,6 +197,12 @@ public class AdminController {
     @ResponseBody
     public DepartmentExamEntity findDepartmentExamById(@PathVariable("id") Long departmentExamId) {
         return adminService.findDepartmentExamById(departmentExamId);
+    }
+
+    @RequestMapping(value = "/manage-department-exam/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String deleteDepartmentExam(Long id) {
+        adminService.deleteDepartmentExam(id);
+        return "redirect:/admin/manage-department-exam";
     }
     //END MANAGE DEPARTMENT EXAM
 

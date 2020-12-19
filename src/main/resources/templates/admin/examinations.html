@@ -48,10 +48,10 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>STT</th>
-                                    <th>Tên đợt khám</th>
-                                    <th>Thời gian</th>
-                                    <th>Hành động</th>
+                                    <th style="width: 10%;">STT</th>
+                                    <th style="width: 50%;">Tên đợt khám</th>
+                                    <th style="width: 30%;">Thời gian đợt khám</th>
+                                    <th style="width: 10%;">Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -62,11 +62,11 @@
                                         <td th:text="${u.createdDate}"></td>
                                         <td>
                                             <a th:href="@{/admin/manage-examination/{id}(id=${u.id})}"
-                                               id="btnEditExaminationRow"
+                                               id="btnEditExaminationRow" name="btnEditExaminationRow"
                                                class="btn btn-warning">Sửa</a>
 
-                                            <a th:href="@{/admin/general-profiles/delete/{id}(id=${u.id})}"
-                                               id="btnDeleteExaminationRow"
+                                            <a th:href="@{/admin/manage-examination/delete/(id=${u.id})}"
+                                               id="btnDeleteExaminationRow" name="btnDeleteExaminationRow"
                                                class="btn btn-danger">Xóa</a>
                                         </td>
                                     </tr>
@@ -143,6 +143,25 @@
                     </form>
                 </div>
 
+                <div class="modal" tabindex="-1" role="dialog" id="deleteConfirmExaminationModal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Bạn chắc chắn xóa đợt khám này?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                                <a href="" class="btn btn-primary" id="deleteExaminationRef">Đồng ý</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <!-- Kết thúc bảng phân quyền -->

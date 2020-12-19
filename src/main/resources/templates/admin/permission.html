@@ -46,37 +46,37 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>STT</th>
-                                    <th>Mã cán bộ</th>
-                                    <th>Họ và tên</th>
-                                    <th>Phòng ban</th>
-                                    <th>Phân quyền</th>
-                                    <th>Hành động</th>
+                                    <th style="width: 5%;">STT</th>
+                                    <th style="width: 20%;">Mã cán bộ</th>
+                                    <th style="width: 20%;">Họ và tên</th>
+                                    <th style="width: 20%;">Phòng ban</th>
+                                    <th style="width: 20%;">Vai trò</th>
+                                    <th style="width: 15%;">Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <th:block th:each="u,i:${allUserRoles}">
                                     <tr>
                                         <form class="form-horizontal" th:method="post"
-                                              th:action="@{/admin/users-permissions/update(userId=${u.id.userId},roleId=${u.id.roleId})}"
-                                              th:object="${userRoleUpdate}">
+                                              th:action="@{/admin/users-permissions/update(userId=${u.id.userId})}"
+                                              th:object="${roleIdChangeSelected}" method="post">
                                             <td th:text="${i.count}"></td>
                                             <td th:text="${u.user.userName}"></td>
                                             <td th:text="${u.user.fullName}"></td>
                                             <td th:text="${u.user.className}"></td>
                                             <td>
-                                                <select th:field="*{id.roleId}" class="form-control">
+                                                <select name="roleIdChangeSelected" class="form-control">
                                                     <option th:each="role : ${roles}"
                                                             th:text="${role.roleName}" th:value="${role.id}"
-                                                            th:selected="${role.id == u.id.roleId}">
+                                                            th:selected="${u.role.id == role.id}">
                                                     </option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <button type="submit" class="btn btn-warning">Cập nhật</button>
 
-                                                <a th:href="@{/admin/general-profiles/delete/{id}(id=${u.id})}"
-                                                   id="deleteProfileButtonRow"
+                                                <a th:href="@{/admin/users-permissions/delete/(userId=${u.id.userId})}"
+                                                   id="btnDeleteProfileButtonRow" name="btnDeleteProfileButtonRow"
                                                    class="btn btn-danger">Xóa</a>
                                             </td>
                                         </form>
@@ -90,7 +90,7 @@
 
                 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <form action="#" th:action="@{/admin/users-permissions/addNew}" method="post">
+                    <form action="#" th:action="@{/admin/users-permissions/new}" method="post">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -117,11 +117,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="addUser-password" class="col-form-label">Mật khẩu:</label>
-                                        <input type="text" required class="form-control" id="addUser-password"
+                                        <input type="password" required class="form-control" id="addUser-password"
                                                name="password">
                                     </div>
                                     <div class="form-group">
-                                        <label for="roleId" class="col-form-label">Phân quyền:</label>
+                                        <label for="roleId" class="col-form-label">Vai trò:</label>
                                         <select id="roleId" name="roleId" class="form-control">
                                             <option th:each="role : ${roles}"
                                                     th:value="${role.id}"
@@ -137,6 +137,26 @@
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <div class="modal" tabindex="-1" role="dialog" id="deleteConfirmPermissionModal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Bạn chắc chắn xóa người dùng này?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                                <a href="" class="btn btn-primary" id="deletePermissionRef">Đồng ý</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>

@@ -7,6 +7,7 @@ import application.service.AdminService;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -60,7 +61,17 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<UserRoleEntity> getAllUserRoles() {
-        return userRoleRepository.findAll();
+        Sort mSort = Sort.by(Sort.Order.asc("user.fullName"));
+        return userRoleRepository.findAll(mSort);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteUserPermission(Long userId) {
+        UserRoleEntity userRoleEntity = userRoleRepository.findUserRoleOfUser(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Not found by id " + userId));
+        userRoleRepository.delete(userRoleEntity);
+        iUserRepository.deleteById(userId);
     }
 
     @Override
@@ -75,16 +86,19 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveOrUpdatePhysicalExam(PhysicalExamEntity physicalExamEntity) {
 
     }
-    
+
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deletePhysicalExam(PhysicalExamEntity entity) {
         physicalExamRepository.delete(entity);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveNewUserRole(UserRoleEntity userRoleEntity) {
         UserEntity userEntity = userRoleEntity.getUser();
         userEntity.setId(null);
@@ -102,9 +116,19 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void saveUpdateUserRole(UserRoleEntity input) {
-        Optional<UserRoleEntity> optional = userRoleRepository.findUserRoleOfUser(input.getId().getUserId());
-//        userRoleRepository.save(userRoleEntity);
+    @Transactional(rollbackFor = Exception.class)
+    public void saveUpdateUserRole(UserRoleEntity userRoleEntityCreated) {
+        UserRoleEntity userRoleEntityDelete = userRoleRepository.findUserRoleOfUser(userRoleEntityCreated.getId().getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Not found by user id " + userRoleEntityCreated.getId().getUserId()));
+        userRoleRepository.delete(userRoleEntityDelete);
+
+        UserEntity userEntity = iUserRepository.findById(userRoleEntityCreated.getId().getUserId()).get();
+        RoleEntity roleEntity = roleRepository.findById(userRoleEntityCreated.getId().getRoleId()).get();
+        userRoleEntityCreated.setUser(userEntity);
+        userRoleEntityCreated.setRole(roleEntity);
+        userRoleEntityCreated.setStatus(true);
+
+        userRoleRepository.save(userRoleEntityCreated);
     }
 
     //Examination
@@ -124,10 +148,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveOrUpdateExamination(ExaminationEntity examinationEntity) {
         examinationRepository.save(examinationEntity);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteExamination(Long examinationId) {
+        examinationRepository.deleteById(examinationId);
+    }
 
     //Department Exam
     @Override
@@ -146,8 +176,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveOrUpdateDepartmentExam(DepartmentExamEntity departmentExamEntity) {
         departmentExamRepository.save(departmentExamEntity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteDepartmentExam(Long departmentExamId) {
+        departmentExamRepository.deleteById(departmentExamId);
     }
 
     //Statistic
