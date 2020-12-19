@@ -18,7 +18,7 @@ public interface AdminService {
 
     PhysicalExamEntity findPhysicalExamById(Long id);
 
-    void savePhysicalExam(PhysicalExamEntity examEntity);
+    void saveOrUpdatePhysicalExam(PhysicalExamEntity physicalExamEntity);
 
     void deletePhysicalExam(PhysicalExamEntity entity);
 

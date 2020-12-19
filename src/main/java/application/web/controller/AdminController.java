@@ -2,6 +2,7 @@ package application.web.controller;
 
 import application.domain.DepartmentExamForm;
 import application.domain.ExaminationForm;
+import application.domain.PhysicalExamForm;
 import application.domain.UserRoleForm;
 import application.entity.*;
 import application.service.AdminService;
@@ -39,7 +40,6 @@ public class AdminController {
     //START MANAGE UPLOAD FILE
     @GetMapping("/upload")
     String index(Model model, final Principal principal) {
-        ;
         model.addAttribute("fileUpload", new FileUpload());
         model.addAttribute("allExaminations", adminService.findAllExamination());
         model.addAttribute("allDepartmentExams", adminService.findAllDepartmentExams());
@@ -99,6 +99,16 @@ public class AdminController {
     String getGeneralProfiles(Model model) {
         model.addAttribute("allPhysical", adminService.getAllPhysicalExam());
         return "admin/generalProfile";
+    }
+
+    @RequestMapping(value = "/general-profiles/new", method = RequestMethod.POST)
+    String addNewPhysicalExam(PhysicalExamForm physicalExamForm) {
+        PhysicalExamEntity physicalExamEntity = PhysicalExamEntity.builder()
+                .id(null)
+                .build();
+
+        adminService.saveOrUpdatePhysicalExam(physicalExamEntity);
+        return "redirect:/admin/general-profiles";
     }
 
     @RequestMapping(value = "/general-profiles/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})

@@ -5,7 +5,6 @@ import application.entity.RoleEntity;
 import application.entity.UserEntity;
 import application.utils.StatusRegisterUserEnum;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 

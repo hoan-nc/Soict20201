@@ -75,10 +75,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void savePhysicalExam(PhysicalExamEntity examEntity) {
-        physicalExamRepository.save(examEntity);
-    }
+    public void saveOrUpdatePhysicalExam(PhysicalExamEntity physicalExamEntity) {
 
+    }
+    
     @Override
     public void deletePhysicalExam(PhysicalExamEntity entity) {
         physicalExamRepository.delete(entity);
