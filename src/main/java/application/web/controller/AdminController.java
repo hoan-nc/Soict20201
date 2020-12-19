@@ -29,6 +29,7 @@ public class AdminController {
     private final AdminService adminService;
     private final UserService userService;
 
+
     @Autowired
     public AdminController(FileService fileService, AdminService adminService, UserService userService) {
         this.fileService = fileService;
@@ -42,6 +43,7 @@ public class AdminController {
     String index(Model model, final Principal principal) {
         model.addAttribute("fileUpload", new FileUpload());
         model.addAttribute("allExaminations", adminService.findAllExamination());
+        model.addAttribute("allDepartmentExams", adminService.findAllDepartmentExams());
         return "admin/upload";
     }
 
