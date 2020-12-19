@@ -1,5 +1,6 @@
 package application.service.impl;
 
+import application.domain.UserChangePass;
 import application.entity.PhysicalExamEntity;
 import application.entity.RoleEntity;
 import application.entity.UserEntity;
@@ -16,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -89,7 +90,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getByUsername(String userName) {
-        return userRepository.findByUserName(userName);
+        return userRepository.findByUserNameIgnoreCase(userName)
+                .orElseThrow(() -> new IllegalArgumentException("Not found by user name " + userName));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void changePasswordUser(UserChangePass userChangePass) {
+        UserEntity userEntity = userRepository.findByUserNameIgnoreCase(userChangePass.getUsername())
+                .orElseThrow(() -> new IllegalArgumentException("Not found by user name " + userChangePass.getUsername()));
+
+        userEntity.setPassword(userChangePass.getNewPassword());
+        userEntity.setPasswordHash(passwordEncoder.encode(userEntity.getPassword()));
+
+        userRepository.save(userEntity);
     }
 
     @Override

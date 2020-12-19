@@ -1,5 +1,6 @@
 package application.service;
 
+import application.domain.UserChangePass;
 import application.entity.PhysicalExamEntity;
 import application.entity.RoleEntity;
 import application.entity.UserEntity;
@@ -17,6 +18,8 @@ public interface UserService {
     List<PhysicalExamEntity> getAllPhysicalExamByUser(String username);
 
     UserEntity getByUsername(String userName);
+
+    void changePasswordUser(UserChangePass userChangePass);
 
     TreeMap<String, Double> getStatisticHeightOfUser(String username);
 

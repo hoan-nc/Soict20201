@@ -12,5 +12,4 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUserNameIgnoreCase(@Param("userName") String userName);
 
-    UserEntity findByUserName(@Param("userName") String userName);
 }

@@ -1,19 +1,15 @@
 package application.web.controller;
 
+import application.domain.UserChangePass;
 import application.entity.UserEntity;
 import application.service.UserService;
 import application.service.impl.UserAuthenticatorServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -44,15 +40,24 @@ public class UserController {
 
     @GetMapping("/user/general-profile")
     String getGeneralProfiles(Model model) {
-        String username;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = userAuthenticatorService.getUsernameLogin();
         model.addAttribute("allMyPhysical", userService.getAllPhysicalExamByUser(username));
-        return "myProfile";
+        return "physicalProfileMe";
+    }
+
+    @GetMapping("/user/detail")
+    String getDetailUserInfo(Model model) {
+        String username = userAuthenticatorService.getUsernameLogin();
+        model.addAttribute("userDetail", userService.getByUsername(username));
+        return "userDetail";
+    }
+
+    @PostMapping("/user/detail/change-pass")
+    String changePasswordUser(UserChangePass userChangePass) {
+        String username = userAuthenticatorService.getUsernameLogin();
+        userChangePass.setUsername(username);
+        userService.changePasswordUser(userChangePass);
+        return "userDetail";
     }
 
     //START STATISTIC
