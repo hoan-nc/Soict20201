@@ -35,7 +35,7 @@
                                 <div style="margin-bottom: 20px;">
                                     <button class="btn btn-primary newBtn"
                                             data-toggle="modal"
-                                            data-target="#addPhysicalModal">
+                                            data-target="#addPhysicalUserModal">
                                         <i class="fas fa-plus-circle"></i> Thêm mới
                                     </button>
                                 </div>
@@ -84,10 +84,10 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="addPhysicalModal" tabindex="-1" role="dialog"
+                <div class="modal fade" id="addPhysicalUserModal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <form>
-                        <div class="modal-dialog" role="document">
+                    <form action="#" th:action="@{/admin/manage-department-exam/new}" method="post">
+                        <div class="modal-dialog modal-xl" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Thêm mới hồ sơ y tế</h5>
@@ -96,16 +96,195 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                            <input type="text" class="form-control" id="recipient-name">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Họ và tên:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
                                         </div>
-                                    </form>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Ngày khám:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Đợt khám:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Đơn vị khám:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Chiều cao:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Cân nặng:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Huyết :</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Mắt:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Tổng phân tích máu:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Số lượng bạch cầu (WBC):</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Số lượng hồng cầu (RBC):</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Lượng huyết sắc tố (Hb):</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Số lượng tiểu cầu (PLT):</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Ure máu (Architect):</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Creatinin máu (Architect):</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">HBsAg nhanh:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Nội khoa:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Ngoại khoa:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Tai mũi họng:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Răng hàm mặt:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Da liễu:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Tâm thần kinh:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Phân lọai sức khỏe:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="recipient-name"
+                                                       class="col-form-label">Tư vấn:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
-                                    <button type="button" class="btn btn-primary">Thêm mới</button>
+                                    <button type="submit" class="btn btn-primary">Thêm mới</button>
                                 </div>
                             </div>
                         </div>
