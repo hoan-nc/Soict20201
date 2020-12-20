@@ -1,6 +1,7 @@
 package application.web.controller;
 
 import application.domain.UserChangePass;
+import application.domain.UserDetailForm;
 import application.entity.UserEntity;
 import application.service.UserService;
 import application.service.impl.UserAuthenticatorServiceImpl;
@@ -50,6 +51,18 @@ public class UserController {
         String username = userAuthenticatorService.getUsernameLogin();
         model.addAttribute("userDetail", userService.getByUsername(username));
         return "userDetail";
+    }
+
+    @PostMapping("/user/detail/update")
+    String updateUserInfo(UserDetailForm userDetailForm) {
+        UserEntity userEntity = UserEntity.builder()
+                .id(userDetailForm.getId())
+                .className(userDetailForm.getClassName())
+                .fullName(userDetailForm.getFullName())
+                .build();
+        userService.updateUserInfo(userEntity);
+
+        return "redirect:/user/detail";
     }
 
     @PostMapping("/user/detail/change-pass")

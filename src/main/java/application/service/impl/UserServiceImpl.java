@@ -96,6 +96,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void updateUserInfo(UserEntity userEntity) {
+        UserEntity userEntitySaved = userRepository.findById(userEntity.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Not found by id " + userEntity.getId()));
+        userEntitySaved.setFullName(userEntity.getFullName());
+        userEntitySaved.setClassName(userEntity.getClassName());
+        userRepository.save(userEntitySaved);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void changePasswordUser(UserChangePass userChangePass) {
         UserEntity userEntity = userRepository.findByUserNameIgnoreCase(userChangePass.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("Not found by user name " + userChangePass.getUsername()));

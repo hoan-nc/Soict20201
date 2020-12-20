@@ -19,6 +19,8 @@ public interface UserService {
 
     UserEntity getByUsername(String userName);
 
+    void updateUserInfo(UserEntity userEntity);
+
     void changePasswordUser(UserChangePass userChangePass);
 
     TreeMap<String, Double> getStatisticHeightOfUser(String username);

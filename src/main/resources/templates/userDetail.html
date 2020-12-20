@@ -41,35 +41,50 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="width: 500px!important;">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label class="col-form-label">Họ và tên:</label>
-                                    <input type="text" class="form-control">
+                        <form action="" th:action="@{/user/detail/update}" method="post">
+                            <div class="row" style="width: 500px!important;" hidden="hidden">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Mã:</label>
+                                        <input type="text" th:value="${userDetail.id}" class="form-control"
+                                               name="id">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" style="width: 500px!important;">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label class="col-form-label">Phòng ban:</label>
-                                    <input type="text" class="form-control">
+                            <div class="row" style="width: 500px!important;">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Tên tài khoản:</label>
+                                        <input type="text" th:value="${userDetail.userName}" class="form-control"
+                                               readonly="readonly"
+                                               name="userName">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" style="width: 500px!important;">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label class="col-form-label">Vai trò:</label>
-                                    <input type="text" class="form-control">
+                            <div class="row" style="width: 500px!important;">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Họ và tên:</label>
+                                        <input type="text" th:value="${userDetail.fullName}" class="form-control"
+                                               name="fullName" required>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <button type="submit" class="btn btn-danger"
-                                    style=" margin-left: 12px!important;">Cập nhật
-                            </button>
-                        </div>
+                            <div class="row" style="width: 500px!important;">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Phòng ban:</label>
+                                        <input type="text" th:value="${userDetail.className}" class="form-control"
+                                               id="className" name="className" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button type="submit" class="btn btn-danger"
+                                        style=" margin-left: 12px!important;">Cập nhật
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
