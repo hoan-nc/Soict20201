@@ -43,7 +43,7 @@ public class PhysicalExamEntity implements Serializable {
 
     @Basic
     @Column(name = "created_date", nullable = false)
-    private Date createdDate;
+    private String createdDate;
 
     @Basic
     @Column(name = "year", nullable = false)

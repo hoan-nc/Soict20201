@@ -69,7 +69,8 @@
                                         <td th:text="'Loại ' + ${u.healthType}"></td>
                                         <td th:text="${u.advisory}"></td>
                                         <td>
-                                            <a th:href="@{/admin/general-profiles/edit/{id}(id=${u.id})}"
+                                            <a th:href="@{/admin/general-profiles/{id}(id=${u.id})}"
+                                               id="btnEditGeneralProfilesRow" name="btnEditGeneralProfilesRow"
                                                class="btn btn-warning">Sửa</a>
 
                                             <a th:href="@{/admin/general-profiles/delete/(id=${u.id})}"
@@ -86,7 +87,7 @@
 
                 <div class="modal fade" id="addPhysicalModal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <form action="#" th:action="@{/admin/manage-department-exam/new}" method="post">
+                    <form action="#" th:action="@{/admin/general-profiles/new}" method="post">
                         <div class="modal-dialog modal-xl" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -99,11 +100,11 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="userId"
                                                        class="col-form-label">Họ và tên:</label>
-<!--                                                <input type="text" class="form-control" id="recipient-name">-->
-                                                <select id="userName"   class="form-control">
+                                                <select id="userId" name="userId" class="form-control">
                                                     <option th:each="u : ${allUsers}"
+                                                            th:value="${u.id.userId}"
                                                             th:text="${u.user.fullName + '  (' + u.user.className + ')'}">
                                                     </option>
                                                 </select>
@@ -111,18 +112,11 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
-                                                       class="col-form-label">Ngày khám:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="examinationId"
                                                        class="col-form-label">Đợt khám:</label>
-<!--                                                <input type="text" class="form-control" id="recipient-name">-->
-                                                <select id="examination"   class="form-control">
+                                                <select id="examinationId" name="examinationId" class="form-control">
                                                     <option th:each="e : ${allExaminations}"
+                                                            th:value="${e.id}"
                                                             th:text="${e.name+ '    (' +e.createdDate+ ')'}">
                                                     </option>
                                                 </select>
@@ -130,45 +124,59 @@
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="departmentExamId"
                                                        class="col-form-label">Đơn vị khám:</label>
-<!--                                                <input type="text" class="form-control" id="recipient-name">-->
-                                                <select id="department"   class="form-control">
+                                                <select id="departmentExamId" name="departmentExamId"
+                                                        class="form-control">
                                                     <option th:each="d : ${allDepartmentExams}"
+                                                            th:value="${d.id}"
                                                             th:text="${d.name+ '    (' +d.address+ ')'}">
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="createdDate"
+                                                       class="col-form-label">Ngày khám:</label>
+                                                <input type="text" class="form-control" id="createdDate"
+                                                       required="required"
+                                                       name="createdDate">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="height"
                                                        class="col-form-label">Chiều cao:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="height"
+                                                       required="required" th:required="Long" name="height">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="weight"
                                                        class="col-form-label">Cân nặng:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="weight"
+                                                       required="required" th:required="Long" name="weight">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
-                                                       class="col-form-label">Huyết :</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <label for="bloodPressure"
+                                                       class="col-form-label">Huyết áp:</label>
+                                                <input type="text" class="form-control" id="bloodPressure"
+                                                       required="required" th:required="String" name="bloodPressure">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="eyes"
                                                        class="col-form-label">Mắt:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="eyes"
+                                                       required="required" name="eyes">
                                             </div>
                                         </div>
                                     </div>
@@ -176,30 +184,34 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="bloodAnalysis"
                                                        class="col-form-label">Tổng phân tích máu:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="bloodAnalysis"
+                                                       required="required" name="bloodAnalysis">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="whiteBloodNumber"
                                                        class="col-form-label">Số lượng bạch cầu (WBC):</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="whiteBloodNumber"
+                                                       required="required" th:required="Double" name="whiteBloodNumber">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="redBloodNumber"
                                                        class="col-form-label">Số lượng hồng cầu (RBC):</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="redBloodNumber"
+                                                       required="required" th:required="Double" name="redBloodNumber">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="hemoglobin"
                                                        class="col-form-label">Lượng huyết sắc tố (Hb):</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="hemoglobin"
+                                                       required="required" th:required="Double" name="hemoglobin">
                                             </div>
                                         </div>
                                     </div>
@@ -207,30 +219,34 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="plateletNumber"
                                                        class="col-form-label">Số lượng tiểu cầu (PLT):</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="plateletNumber"
+                                                       required="required" th:required="Long" name="plateletNumber">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="bloodUrea"
                                                        class="col-form-label">Ure máu (Architect):</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="bloodUrea"
+                                                       required="required" th:required="Long" name="bloodUrea">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="bloodCreatinine"
                                                        class="col-form-label">Creatinin máu (Architect):</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="bloodCreatinine"
+                                                       required="required" th:required="Long" name="bloodCreatinine">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="hepatitisB"
                                                        class="col-form-label">HBsAg nhanh:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="hepatitisB"
+                                                       required="required" name="hepatitisB">
                                             </div>
                                         </div>
                                     </div>
@@ -238,30 +254,34 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="insideMedical"
                                                        class="col-form-label">Nội khoa:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="insideMedical"
+                                                       required="required" name="insideMedical">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="outsideMedical"
                                                        class="col-form-label">Ngoại khoa:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="outsideMedical"
+                                                       required="required" name="outsideMedical">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="earNoseThroat"
                                                        class="col-form-label">Tai mũi họng:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="earNoseThroat"
+                                                       required="required" name="earNoseThroat">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="dentomaxillofacial"
                                                        class="col-form-label">Răng hàm mặt:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="dentomaxillofacial"
+                                                       required="required" name="dentomaxillofacial">
                                             </div>
                                         </div>
                                     </div>
@@ -269,30 +289,37 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="dermatology"
                                                        class="col-form-label">Da liễu:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="dermatology"
+                                                       required="required" name="dermatology">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="nerve"
                                                        class="col-form-label">Tâm thần kinh:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="nerve"
+                                                       required="required" name="nerve">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="healthType"
                                                        class="col-form-label">Phân lọai sức khỏe:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <select th:name="healthType" id="healthType" class="form-control">
+                                                    <option th:value="1" th:text="'Loại 1'"></option>
+                                                    <option th:value="2" th:text="'Loại 2'"></option>
+                                                    <option th:value="3" th:text="'Loại 3'"></option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="recipient-name"
+                                                <label for="advisory"
                                                        class="col-form-label">Tư vấn:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <input type="text" class="form-control" id="advisory"
+                                                       required="required" name="advisory">
                                             </div>
                                         </div>
                                     </div>
@@ -300,6 +327,249 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
                                     <button type="submit" class="btn btn-primary">Thêm mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal fade" id="editPhysicalModal" tabindex="-1" role="dialog"
+                     aria-labelledby="editGeneralProfileModalLabel" aria-hidden="true">
+                    <form action="#" th:action="@{/admin/general-profiles/update}" method="post">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editGeneralProfileModalLabel">Chỉnh sửa hồ sơ y tế</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col" hidden>
+                                            <div class="form-group">
+                                                <label for="userId"
+                                                       class="col-form-label">ID:</label>
+                                                <input type="text" class="form-control" id="idEdit"
+                                                       readonly="readonly" name="id">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="userId"
+                                                       class="col-form-label">Họ và tên:</label>
+                                                <input type="text" class="form-control" id="fullNameEdit"
+                                                       readonly="readonly" name="fullName">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="examinationId"
+                                                       class="col-form-label">Đợt khám:</label>
+                                                <input type="text" class="form-control" id="examinationEdit"
+                                                       readonly="readonly" name="examination">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="departmentExamId"
+                                                       class="col-form-label">Đơn vị khám:</label>
+                                                <input type="text" class="form-control" id="departmentExamEdit"
+                                                       readonly="readonly" name="departmentExam">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="createdDate"
+                                                       class="col-form-label">Ngày khám:</label>
+                                                <input type="text" class="form-control" id="createdDateEdit"
+                                                       required="required" name="createdDate">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="height"
+                                                       class="col-form-label">Chiều cao:</label>
+                                                <input type="text" class="form-control" id="heightEdit"
+                                                       required="required" th:required="Long" name="height">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="weight"
+                                                       class="col-form-label">Cân nặng:</label>
+                                                <input type="text" class="form-control" id="weightEdit"
+                                                       required="required" th:required="Long" name="weight">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="bloodPressure"
+                                                       class="col-form-label">Huyết áp:</label>
+                                                <input type="text" class="form-control" id="bloodPressureEdit"
+                                                       required="required" th:required="String" name="bloodPressure">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="eyes"
+                                                       class="col-form-label">Mắt:</label>
+                                                <input type="text" class="form-control" id="eyesEdit"
+                                                       required="required" name="eyes">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="bloodAnalysis"
+                                                       class="col-form-label">Tổng phân tích máu:</label>
+                                                <input type="text" class="form-control" id="bloodAnalysisEdit"
+                                                       required="required" name="bloodAnalysis">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="whiteBloodNumber"
+                                                       class="col-form-label">Số lượng bạch cầu (WBC):</label>
+                                                <input type="text" class="form-control" id="whiteBloodNumberEdit"
+                                                       required="required" th:required="Double" name="whiteBloodNumber">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="redBloodNumber"
+                                                       class="col-form-label">Số lượng hồng cầu (RBC):</label>
+                                                <input type="text" class="form-control" id="redBloodNumberEdit"
+                                                       required="required" th:required="Double" name="redBloodNumber">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="hemoglobin"
+                                                       class="col-form-label">Lượng huyết sắc tố (Hb):</label>
+                                                <input type="text" class="form-control" id="hemoglobinEdit"
+                                                       required="required" th:required="Double" name="hemoglobin">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="plateletNumber"
+                                                       class="col-form-label">Số lượng tiểu cầu (PLT):</label>
+                                                <input type="text" class="form-control" id="plateletNumberEdit"
+                                                       required="required" th:required="Long" name="plateletNumber">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="bloodUrea"
+                                                       class="col-form-label">Ure máu (Architect):</label>
+                                                <input type="text" class="form-control" id="bloodUreaEdit"
+                                                       required="required" th:required="Long" name="bloodUrea">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="bloodCreatinine"
+                                                       class="col-form-label">Creatinin máu (Architect):</label>
+                                                <input type="text" class="form-control" id="bloodCreatinineEdit"
+                                                       required="required" th:required="Long" name="bloodCreatinine">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="hepatitisB"
+                                                       class="col-form-label">HBsAg nhanh:</label>
+                                                <input type="text" class="form-control" id="hepatitisBEdit"
+                                                       required="required" name="hepatitisB">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="insideMedical"
+                                                       class="col-form-label">Nội khoa:</label>
+                                                <input type="text" class="form-control" id="insideMedicalEdit"
+                                                       required="required" name="insideMedical">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="outsideMedical"
+                                                       class="col-form-label">Ngoại khoa:</label>
+                                                <input type="text" class="form-control" id="outsideMedicalEdit"
+                                                       required="required" name="outsideMedical">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="earNoseThroat"
+                                                       class="col-form-label">Tai mũi họng:</label>
+                                                <input type="text" class="form-control" id="earNoseThroatEdit"
+                                                       required="required" name="earNoseThroat">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="dentomaxillofacial"
+                                                       class="col-form-label">Răng hàm mặt:</label>
+                                                <input type="text" class="form-control" id="dentomaxillofacialEdit"
+                                                       required="required" name="dentomaxillofacial">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="dermatology"
+                                                       class="col-form-label">Da liễu:</label>
+                                                <input type="text" class="form-control" id="dermatologyEdit"
+                                                       required="required" name="dermatology">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="nerve"
+                                                       class="col-form-label">Tâm thần kinh:</label>
+                                                <input type="text" class="form-control" id="nerveEdit"
+                                                       required="required" name="nerve">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="healthType"
+                                                       class="col-form-label">Phân lọai sức khỏe:</label>
+                                                <select th:name="healthType" name="healthType" id="healthTypeEdit"
+                                                        class="form-control">
+                                                    <option th:value="1" th:text="'Loại 1'"></option>
+                                                    <option th:value="2" th:text="'Loại 2'"></option>
+                                                    <option th:value="3" th:text="'Loại 3'"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <label for="advisory"
+                                                       class="col-form-label">Tư vấn:</label>
+                                                <input type="text" class="form-control" id="advisoryEdit"
+                                                       required="required" name="advisory">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                                 </div>
                             </div>
                         </div>

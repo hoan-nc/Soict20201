@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,6 +18,8 @@ public class PhysicalExamForm {
     private Long examinationId;
 
     private Long departmentExamId;
+
+    private String createdDate;
 
     private Long height;
 

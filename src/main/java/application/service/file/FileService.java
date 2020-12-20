@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -60,8 +61,7 @@ public class FileService {
             System.out.println(nextRow.getRowNum());
             //Create object
             PhysicalExamEntity physicalExamEntity = new PhysicalExamEntity();
-            Date createTime = new Date();
-            physicalExamEntity.setCreatedDate(createTime);
+            physicalExamEntity.setCreatedDate(new SimpleDateFormat("dd/MM/yyyyy").format(new Date()));
             physicalExamEntity.setIsActive(true);
             physicalExamEntity.setYear(fileUpload.getExamination().getYear());
             physicalExamEntity.setExamination(fileUpload.getExamination());

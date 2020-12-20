@@ -89,6 +89,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public PhysicalExamEntity findPhysicalById(Long physicalId) {
+        return physicalExamRepository.findById(physicalId)
+                .orElseThrow(() -> new IllegalArgumentException("Not found by id " + physicalId));
+    }
+
+    @Override
     public UserEntity getByUsername(String userName) {
         return userRepository.findByUserNameIgnoreCase(userName)
                 .orElseThrow(() -> new IllegalArgumentException("Not found by user name " + userName));

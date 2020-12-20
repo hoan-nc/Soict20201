@@ -9,6 +9,7 @@ import application.entity.id.UserRoleId;
 import application.service.AdminService;
 import application.service.UserService;
 import application.service.file.FileService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -112,12 +114,50 @@ public class AdminController {
         return "admin/generalProfile";
     }
 
+    @RequestMapping(value = "/general-profiles/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public PhysicalExamEntity findPhysicalById(@PathVariable("id") Long physicalId) {
+        return adminService.findPhysicalExamById(physicalId);
+    }
+
+    @SneakyThrows
     @RequestMapping(value = "/general-profiles/new", method = RequestMethod.POST)
-    String addNewPhysicalExam(PhysicalExamForm physicalExamForm) {
+    String addNewPhysicalExam(PhysicalExamForm form) {
         PhysicalExamEntity physicalExamEntity = PhysicalExamEntity.builder()
                 .id(null)
+                .user(UserEntity.builder().id(form.getUserId()).build())
+                .examination(ExaminationEntity.builder().id(form.getExaminationId()).build())
+                .departmentExam(DepartmentExamEntity.builder().id(form.getDepartmentExamId()).build())
+                .createdDate(form.getCreatedDate())
+                .height(form.getHeight())
+                .weight(form.getWeight())
+                .bloodPressure(form.getBloodPressure())
+                .eyes(form.getEyes())
+                .insideMedical(form.getInsideMedical())
+                .outsideMedical(form.getOutsideMedical())
+                .earNoseThroat(form.getEarNoseThroat())
+                .dentomaxillofacial(form.getDentomaxillofacial())
+                .dermatology(form.getDermatology())
+                .nerve(form.getNerve())
+                .bloodAnalysis(form.getBloodAnalysis())
+                .whiteBloodNumber(form.getWhiteBloodNumber())
+                .redBloodNumber(form.getRedBloodNumber())
+                .hemoglobin(form.getHemoglobin())
+                .plateletNumber(form.getPlateletNumber())
+                .bloodUrea(form.getBloodUrea())
+                .bloodCreatinine(form.getBloodCreatinine())
+                .hepatitisB(form.getHepatitisB())
+                .healthType(form.getHealthType())
+                .advisory(form.getAdvisory())
+                .isActive(true)
                 .build();
 
+        adminService.saveOrUpdatePhysicalExam(physicalExamEntity);
+        return "redirect:/admin/general-profiles";
+    }
+
+    @RequestMapping(value = "/general-profiles/update", method = RequestMethod.POST)
+    String updatePhysicalExam(PhysicalExamEntity physicalExamEntity) {
         adminService.saveOrUpdatePhysicalExam(physicalExamEntity);
         return "redirect:/admin/general-profiles";
     }
@@ -151,7 +191,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/manage-examination/update", method = RequestMethod.POST)
-    String addExamination(ExaminationEntity examinationEntity) {
+    String updateExamination(ExaminationEntity examinationEntity) {
         Long year = Long.valueOf(examinationEntity.getCreatedDate().substring(6));
         examinationEntity.setYear(year);
 

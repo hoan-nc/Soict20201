@@ -17,6 +17,8 @@ public interface UserService {
 
     List<PhysicalExamEntity> getAllPhysicalExamByUser(String username);
 
+    PhysicalExamEntity findPhysicalById(Long physicalId);
+
     UserEntity getByUsername(String userName);
 
     void updateUserInfo(UserEntity userEntity);

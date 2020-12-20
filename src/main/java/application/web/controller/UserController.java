@@ -2,6 +2,7 @@ package application.web.controller;
 
 import application.domain.UserChangePass;
 import application.domain.UserDetailForm;
+import application.entity.PhysicalExamEntity;
 import application.entity.UserEntity;
 import application.service.UserService;
 import application.service.impl.UserAuthenticatorServiceImpl;
@@ -44,6 +45,12 @@ public class UserController {
         String username = userAuthenticatorService.getUsernameLogin();
         model.addAttribute("allMyPhysical", userService.getAllPhysicalExamByUser(username));
         return "physicalProfileMe";
+    }
+
+    @RequestMapping(value = "/user/general-profile/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public PhysicalExamEntity findPhysicalById(@PathVariable("id") Long physicalId) {
+        return userService.findPhysicalById(physicalId);
     }
 
     @GetMapping("/user/detail")

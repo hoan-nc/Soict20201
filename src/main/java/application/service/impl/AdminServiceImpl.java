@@ -88,7 +88,23 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveOrUpdatePhysicalExam(PhysicalExamEntity physicalExamEntity) {
+        UserEntity userEntity = iUserRepository.findById(physicalExamEntity.getUser().getId())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Not found user by id " + physicalExamEntity.getUser().getId()));
+        ExaminationEntity examinationEntity = examinationRepository.findById(physicalExamEntity.getExamination().getId())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Not found examination by id " + physicalExamEntity.getExamination().getId()));
+        DepartmentExamEntity departmentExamEntity = departmentExamRepository.findById(physicalExamEntity.getDepartmentExam().getId())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Not found department exam by id " + physicalExamEntity.getDepartmentExam().getId()));
 
+        physicalExamEntity.setUser(userEntity);
+        physicalExamEntity.setYear(examinationEntity.getYear());
+        physicalExamEntity.setNameUser(userEntity.getFullName());
+        physicalExamEntity.setExamination(examinationEntity);
+        physicalExamEntity.setDepartmentExam(departmentExamEntity);
+
+        physicalExamRepository.save(physicalExamEntity);
     }
 
     @Override
