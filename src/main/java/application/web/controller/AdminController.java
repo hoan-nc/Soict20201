@@ -106,6 +106,9 @@ public class AdminController {
     @GetMapping("/general-profiles")
     String getGeneralProfiles(Model model) {
         model.addAttribute("allPhysical", adminService.getAllPhysicalExam());
+        model.addAttribute("allExaminations", adminService.findAllExamination());
+        model.addAttribute("allDepartmentExams", adminService.findAllDepartmentExams());
+        model.addAttribute("allUsers", adminService.getAllUserRoles());
         return "admin/generalProfile";
     }
 

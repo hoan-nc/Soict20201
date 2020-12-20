@@ -101,7 +101,12 @@
                                             <div class="form-group">
                                                 <label for="recipient-name"
                                                        class="col-form-label">Họ và tên:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+<!--                                                <input type="text" class="form-control" id="recipient-name">-->
+                                                <select id="userName"   class="form-control">
+                                                    <option th:each="u : ${allUsers}"
+                                                            th:text="${u.user.fullName + '  (' + u.user.className + ')'}">
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -115,14 +120,24 @@
                                             <div class="form-group">
                                                 <label for="recipient-name"
                                                        class="col-form-label">Đợt khám:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+<!--                                                <input type="text" class="form-control" id="recipient-name">-->
+                                                <select id="examination"   class="form-control">
+                                                    <option th:each="e : ${allExaminations}"
+                                                            th:text="${e.name+ '    (' +e.createdDate+ ')'}">
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="recipient-name"
                                                        class="col-form-label">Đơn vị khám:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+<!--                                                <input type="text" class="form-control" id="recipient-name">-->
+                                                <select id="department"   class="form-control">
+                                                    <option th:each="d : ${allDepartmentExams}"
+                                                            th:text="${d.name+ '    (' +d.address+ ')'}">
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
