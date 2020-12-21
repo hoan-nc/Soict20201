@@ -48,4 +48,12 @@ public interface AdminService {
 
     TreeMap<String, Double> getStatisticWeight();
 
+    long getTotalQuantityUsers();
+
+    long getTotalQuantityPhysicalExam();
+
+    long getTotalQuantityDepartmentExam();
+
+    long getTotalQuantityExamination();
+
 }

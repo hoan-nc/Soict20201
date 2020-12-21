@@ -35,4 +35,9 @@ public interface IPhysicalExamRepository extends JpaRepository<PhysicalExamEntit
             "group by p.year order by p.year asc ")
     List<ChartCommon> statisticWeightByYearOfUser(@Param("username") String username);
 
+    @Query("SELECT count(a.id) from PhysicalExamEntity a where a.user.id = :userId ")
+    long countAllByUserId(@Param("userId") Long userId);
+
+    @Query("SELECT p FROM PhysicalExamEntity p where p.user.id = :userId ORDER BY p.id desc")
+    List<PhysicalExamEntity> findAllByUserIdOrder(@Param("userId") Long userId);
 }

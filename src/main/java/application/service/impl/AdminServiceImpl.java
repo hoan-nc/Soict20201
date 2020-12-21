@@ -218,4 +218,24 @@ public class AdminServiceImpl implements AdminService {
         return mapData;
     }
 
+    @Override
+    public long getTotalQuantityUsers() {
+        return userRoleRepository.count();
+    }
+
+    @Override
+    public long getTotalQuantityPhysicalExam() {
+        return physicalExamRepository.count();
+    }
+
+    @Override
+    public long getTotalQuantityDepartmentExam() {
+        return departmentExamRepository.count();
+    }
+
+    @Override
+    public long getTotalQuantityExamination() {
+        return examinationRepository.count();
+    }
+
 }

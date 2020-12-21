@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -134,6 +135,26 @@ public class UserServiceImpl implements UserService {
         TreeMap<String, Double> mapData = new TreeMap<>();
         physicalExamRepository.statisticWeightByYearOfUser(username).forEach(obj -> mapData.put(obj.getName().toString(), obj.getValue()));
         return mapData;
+    }
+
+    @Override
+    public long getTotalQuantityExaminationOfUser(String username) {
+        UserEntity userEntity = userRepository.findByUserNameIgnoreCase(username)
+                .orElseThrow(() -> new IllegalArgumentException("Not found by user name " + username));
+
+        return physicalExamRepository.countAllByUserId(userEntity.getId());
+    }
+
+    @Override
+    public PhysicalExamEntity getPhysicalLastOfUser(String username) {
+        UserEntity userEntity = userRepository.findByUserNameIgnoreCase(username)
+                .orElseThrow(() -> new IllegalArgumentException("Not found by user name " + username));
+
+        List<PhysicalExamEntity> physicals = physicalExamRepository.findAllByUserIdOrder(userEntity.getId());
+        if (!StringUtils.isEmpty(physicals)) {
+            return physicals.get(0);
+        }
+        return new PhysicalExamEntity();
     }
 
 }

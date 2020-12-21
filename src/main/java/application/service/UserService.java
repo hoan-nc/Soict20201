@@ -29,4 +29,8 @@ public interface UserService {
 
     TreeMap<String, Double> getStatisticWeightOfUser(String username);
 
+    long getTotalQuantityExaminationOfUser(String username);
+
+    PhysicalExamEntity getPhysicalLastOfUser(String username);
+
 }
