@@ -6,6 +6,20 @@ function openPopup(url, windowName, height, width) {
     return false;
 }
 
+function openPopupFile(url, windowName) {
+    newwindow = window.open(url, windowName, 'fullscreen=yes, scrollbars=auto');
+    if (window.focus) {
+        newwindow.focus()
+    }
+    return false;
+}
+
+function closeWindow() {
+    window.close();
+    window.opener.location.href = window.opener.location.href;
+    return false;
+}
+
 function validate(id) {
     var texts = document.querySelectorAll('#' + id + ' input[type=text]');
     var selects = document.querySelectorAll('#' + id + ' select');
