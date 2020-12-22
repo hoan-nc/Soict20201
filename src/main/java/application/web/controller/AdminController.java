@@ -1,9 +1,6 @@
 package application.web.controller;
 
-import application.domain.DepartmentExamForm;
-import application.domain.ExaminationForm;
-import application.domain.PhysicalExamForm;
-import application.domain.UserRoleForm;
+import application.domain.*;
 import application.entity.*;
 import application.entity.id.UserRoleId;
 import application.service.AdminService;
@@ -20,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -57,7 +56,17 @@ public class AdminController {
     String getUploadResult(Model model, @Valid @ModelAttribute("fileUpload") FileUpload fileUpload, final Principal principal) throws IOException {
         UserEntity userEntity = userService.getByUsername(principal.getName());
         model.addAttribute("listPerson", fileService.readFile(fileUpload, userEntity));
+        model.addAttribute("records", new Records());
         return "admin/fileProcess";
+    }
+
+    @PostMapping("/saveUploadFileResult")
+    String saveUploadResult(Model model, @Valid @ModelAttribute("fileUpload") FileUpload fileUpload, final Principal principal) {
+        UserEntity userEntity = userService.getByUsername(principal.getName());
+
+//        model.addAttribute("listPerson", fileService.readFile(fileUpload, userEntity));
+//        return "redirect:admin/general-profiles";
+        return "updateAndClose";
     }
     //END MANAGE UPLOAD FILE
 
