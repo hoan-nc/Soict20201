@@ -227,6 +227,62 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public TreeMap<String, Double> getStatisticCurrentInsideMedical() {
+        TreeMap<String, Double> mapData = new TreeMap<>();
+        String searchValue = "BÌNH THƯỜNG" + "%";
+        long total = physicalExamRepository.getTotalInsideMedicalInYear();
+        long totalNormal = physicalExamRepository.getTotalCurrentInsideMedical(searchValue);
+
+        double percent = (totalNormal * 100.0 * 100) / (total * 100);
+        mapData.put("Bình thường", percent);
+        mapData.put("Không bình thường", 100 - percent);
+
+        return mapData;
+    }
+
+    @Override
+    public TreeMap<String, Double> getStatisticCurrentOutsideMedical() {
+        TreeMap<String, Double> mapData = new TreeMap<>();
+        String searchValue = "BÌNH THƯỜNG" + "%";
+        long total = physicalExamRepository.getTotalOutsideMedicalInYear();
+        long totalNormal = physicalExamRepository.getTotalCurrentOutsideMedical(searchValue);
+
+        double percent = (totalNormal * 100.0 * 100) / (total * 100);
+        mapData.put("Bình thường", percent);
+        mapData.put("Không bình thường", 100 - percent);
+
+        return mapData;
+    }
+
+    @Override
+    public TreeMap<String, Double> getStatisticCurrentEarNoseThroat() {
+        TreeMap<String, Double> mapData = new TreeMap<>();
+        String searchValue = "BÌNH THƯỜNG" + "%";
+        long total = physicalExamRepository.getTotalEarNoseThroatInYear();
+        long totalNormal = physicalExamRepository.getTotalCurrentEarNoseThroat(searchValue);
+
+        double percent = (totalNormal * 100.0 * 100) / (total * 100);
+        mapData.put("Bình thường", percent);
+        mapData.put("Không bình thường", 100 - percent);
+
+        return mapData;
+    }
+
+    @Override
+    public TreeMap<String, Double> getStatisticCurrentDentomaxilloFacial() {
+        TreeMap<String, Double> mapData = new TreeMap<>();
+        String searchValue = "BÌNH THƯỜNG" + "%";
+        long total = physicalExamRepository.getTotalDentomaxilloFacialInYear();
+        long totalNormal = physicalExamRepository.getTotalCurrentDentomaxilloFacial(searchValue);
+
+        double percent = (totalNormal * 100.0 * 100) / (total * 100);
+        mapData.put("Bình thường", percent);
+        mapData.put("Không bình thường", 100 - percent);
+
+        return mapData;
+    }
+
+    @Override
     public long getTotalQuantityUsers() {
         return userRoleRepository.count();
     }

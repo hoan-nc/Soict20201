@@ -291,5 +291,26 @@ public class AdminController {
     public ResponseEntity<TreeMap<String, Long>> getStatisticHealthyTypeChart(@PathVariable("year") long year) {
         return new ResponseEntity<>(adminService.getStatisticHealthyType(year), HttpStatus.OK);
     }
+
+    @GetMapping("/statistic-inside-percent-now")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticCurrentInsideMedical() {
+        return new ResponseEntity<>(adminService.getStatisticCurrentInsideMedical(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-outside-percent-now")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticCurrentOutsideMedical() {
+        return new ResponseEntity<>(adminService.getStatisticCurrentOutsideMedical(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-ear-nose-throat-percent-now")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticCurrentEarNoseThroat() {
+        return new ResponseEntity<>(adminService.getStatisticCurrentEarNoseThroat(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-dentomaxillofacial-percent-now")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticCurrentDentomaxilloFacial() {
+        return new ResponseEntity<>(adminService.getStatisticCurrentDentomaxilloFacial(), HttpStatus.OK);
+    }
+
     //END STATISTIC
 }
