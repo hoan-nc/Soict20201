@@ -207,14 +207,22 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public TreeMap<String, Double> getStatisticHeight() {
         TreeMap<String, Double> mapData = new TreeMap<>();
-        physicalExamRepository.statisticHeightByYear().forEach(obj -> mapData.put(obj.getName().toString(), obj.getValue()));
+        physicalExamRepository.statisticHeightByYear().forEach(obj -> mapData.put(obj.getName().toString(), (Double) obj.getValue()));
         return mapData;
     }
 
     @Override
     public TreeMap<String, Double> getStatisticWeight() {
         TreeMap<String, Double> mapData = new TreeMap<>();
-        physicalExamRepository.statisticWeightByYear().forEach(obj -> mapData.put(obj.getName().toString(), obj.getValue()));
+        physicalExamRepository.statisticWeightByYear().forEach(obj -> mapData.put(obj.getName().toString(), (Double) obj.getValue()));
+        return mapData;
+    }
+
+    @Override
+    public TreeMap<String, Long> getStatisticHealthyType(long year) {
+        TreeMap<String, Long> mapData = new TreeMap<>();
+        physicalExamRepository.statisticHealthyTypeByYear(year)
+                .forEach(obj -> mapData.put("Loại " + obj.getName().toString(), (Long) obj.getValue()));
         return mapData;
     }
 

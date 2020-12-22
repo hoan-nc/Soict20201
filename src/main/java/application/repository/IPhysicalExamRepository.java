@@ -40,4 +40,11 @@ public interface IPhysicalExamRepository extends JpaRepository<PhysicalExamEntit
 
     @Query("SELECT p FROM PhysicalExamEntity p where p.user.id = :userId ORDER BY p.id desc")
     List<PhysicalExamEntity> findAllByUserIdOrder(@Param("userId") Long userId);
+
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.healthType, count (p.healthType)) " +
+            "FROM PhysicalExamEntity p where p.year = :year " +
+            "group by p.healthType ")
+    List<ChartCommon> statisticHealthyTypeByYear(@Param("year") long year);
+
 }

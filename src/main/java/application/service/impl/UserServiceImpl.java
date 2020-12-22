@@ -126,14 +126,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public TreeMap<String, Double> getStatisticHeightOfUser(String username) {
         TreeMap<String, Double> mapData = new TreeMap<>();
-        physicalExamRepository.statisticHeightByYearOfUser(username).forEach(obj -> mapData.put(obj.getName().toString(), obj.getValue()));
+        physicalExamRepository.statisticHeightByYearOfUser(username).forEach(obj -> mapData.put(obj.getName().toString(), (Double) obj.getValue()));
         return mapData;
     }
 
     @Override
     public TreeMap<String, Double> getStatisticWeightOfUser(String username) {
         TreeMap<String, Double> mapData = new TreeMap<>();
-        physicalExamRepository.statisticWeightByYearOfUser(username).forEach(obj -> mapData.put(obj.getName().toString(), obj.getValue()));
+        physicalExamRepository.statisticWeightByYearOfUser(username).forEach(obj -> mapData.put(obj.getName().toString(), (Double) obj.getValue()));
         return mapData;
     }
 
