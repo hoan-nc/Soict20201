@@ -14,6 +14,6 @@ import java.io.Serializable;
 public class ChartCommon implements Serializable {
 
     private Object name;
-    private Double value;
+    private Object value;
 
 }

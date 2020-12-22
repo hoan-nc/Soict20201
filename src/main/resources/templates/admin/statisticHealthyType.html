@@ -8,6 +8,7 @@
     <link rel="stylesheet"
           href="https://code.highcharts.com/css/highcharts.css"/>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/js/lib-table/datatables.css"/>
 
     <title>High Chart Example - Spring Boot</title>
 </head>
@@ -44,31 +45,42 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Thống kê cân nặng trung bình qua các năm</h1>
-                <figure class="highcharts-figure">
-                    <div id="container-bar-weight"></div>
-                </figure>
+                <h1 class="h3 mb-2 text-gray-800">Thống kê loại sức khỏe theo năm</h1>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <select id="healthType" class="form-control"
+                                        style="width: 300px!important; margin-left: 50px; margin-bottom: 20px;">
+                                    <option th:value="2020" th:text="'Năm 2020'"></option>
+                                    <option th:value="2019" th:text="'Năm 2019'"></option>
+                                    <option th:value="2018" th:text="'Năm 2018'"></option>
+                                    <option th:value="2017" th:text="'Năm 2017'"></option>
+                                    <option th:value="2016" th:text="'Năm 2016'"></option>
+                                    <option th:value="2015" th:text="'Năm 2015'"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <figure class="highcharts-figure">
+                            <div id="container-bar-healthy-type"></div>
+                        </figure>
+                    </div>
+                </div>
+
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <table id="tableStatisticHealthyType" class="table table-bordered"
+                                   width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Năm</th>
-                                    <th>Cân nặng trung bình</th>
+                                    <th>Loại sức khỏe</th>
+                                    <th>Số lượng</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <th:block th:each="map,i:${mapStatisticWeight}">
-                                    <tr>
-                                        <td th:text="${i.count}"></td>
-                                        <td th:text="${map.key}"></td>
-                                        <td th:text="${map.value}"></td>
-                                    </tr>
-                                </th:block>
-                                </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
@@ -112,8 +124,11 @@
 <script th:src="@{~/js/datatables/jquery.dataTables.min.js}"></script>
 <script th:src="@{~/js/datatables/dataTables.bootstrap4.min.js}"></script>
 
+
 <!-- Page level custom scripts -->
-<script th:src="@{~/js/demo/statistic-column-chart-weight-page.js}"></script>
+<script th:src="@{~/js/demo/statistic-column-chart-healthy-type-page.js}"></script>
+<!--<script th:src="@{~/js/lib-table/datatables.css}"></script>-->
+<script th:src="@{~/js/lib-table/datatables.js}"></script>
 </body>
 
 </html>

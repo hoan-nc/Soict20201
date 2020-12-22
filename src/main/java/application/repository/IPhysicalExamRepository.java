@@ -40,4 +40,52 @@ public interface IPhysicalExamRepository extends JpaRepository<PhysicalExamEntit
 
     @Query("SELECT p FROM PhysicalExamEntity p where p.user.id = :userId ORDER BY p.id desc")
     List<PhysicalExamEntity> findAllByUserIdOrder(@Param("userId") Long userId);
+
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.healthType, count (p.healthType)) " +
+            "FROM PhysicalExamEntity p where p.year = :year " +
+            "group by p.healthType ")
+    List<ChartCommon> statisticHealthyTypeByYear(@Param("year") long year);
+
+    @Query("SELECT count(u.year) " +
+            "FROM PhysicalExamEntity u " +
+            "where u.year = 2020 and upper(u.insideMedical) like :value ")
+    Long getTotalCurrentInsideMedical(@Param("value") String value);
+
+    @Query("SELECT count(u.year) " +
+            "FROM PhysicalExamEntity u " +
+            "where u.year = 2020")
+    Long getTotalInsideMedicalInYear();
+
+    @Query("SELECT count(u.year) " +
+            "FROM PhysicalExamEntity u " +
+            "where u.year = 2020 and upper(u.outsideMedical) like :value ")
+    Long getTotalCurrentOutsideMedical(@Param("value") String value);
+
+    @Query("SELECT count(u.year) " +
+            "FROM PhysicalExamEntity u " +
+            "where u.year = 2020")
+    Long getTotalOutsideMedicalInYear();
+
+
+    @Query("SELECT count(u.year) " +
+            "FROM PhysicalExamEntity u " +
+            "where u.year = 2020 and upper(u.earNoseThroat) like :value ")
+    Long getTotalCurrentEarNoseThroat(@Param("value") String value);
+
+    @Query("SELECT count(u.year) " +
+            "FROM PhysicalExamEntity u " +
+            "where u.year = 2020")
+    Long getTotalEarNoseThroatInYear();
+
+    @Query("SELECT count(u.year) " +
+            "FROM PhysicalExamEntity u " +
+            "where u.year = 2020 and upper(u.dentomaxillofacial) like :value ")
+    Long getTotalCurrentDentomaxilloFacial(@Param("value") String value);
+
+    @Query("SELECT count(u.year) " +
+            "FROM PhysicalExamEntity u " +
+            "where u.year = 2020")
+    Long getTotalDentomaxilloFacialInYear();
+
 }

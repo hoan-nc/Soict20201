@@ -48,6 +48,16 @@ public interface AdminService {
 
     TreeMap<String, Double> getStatisticWeight();
 
+    TreeMap<String, Long> getStatisticHealthyType(long year);
+
+    TreeMap<String, Double> getStatisticCurrentInsideMedical();
+
+    TreeMap<String, Double> getStatisticCurrentOutsideMedical();
+
+    TreeMap<String, Double> getStatisticCurrentEarNoseThroat();
+
+    TreeMap<String, Double> getStatisticCurrentDentomaxilloFacial();
+
     long getTotalQuantityUsers();
 
     long getTotalQuantityPhysicalExam();

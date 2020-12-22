@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -282,6 +281,42 @@ public class AdminController {
     @GetMapping("/statistic-weight")
     public ResponseEntity<TreeMap<String, Double>> getStatisticWeightPieChart() {
         return new ResponseEntity<>(adminService.getStatisticWeight(), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/statistic-healthy-type-page")
+    String getStatisticHealthyType(Model model) {
+        Calendar calendar = Calendar.getInstance();
+        long year = calendar.get(Calendar.YEAR);
+        TreeMap<String, Long> mapData = adminService.getStatisticHealthyType(year);
+        model.addAttribute("mapStatisticHealthyType", mapData);
+
+        return "admin/statisticHealthyType";
+    }
+
+    @GetMapping("/statistic-healthy-type/{year}")
+    public ResponseEntity<TreeMap<String, Long>> getStatisticHealthyTypeChart(@PathVariable("year") long year) {
+        return new ResponseEntity<>(adminService.getStatisticHealthyType(year), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-inside-percent-now")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticCurrentInsideMedical() {
+        return new ResponseEntity<>(adminService.getStatisticCurrentInsideMedical(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-outside-percent-now")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticCurrentOutsideMedical() {
+        return new ResponseEntity<>(adminService.getStatisticCurrentOutsideMedical(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-ear-nose-throat-percent-now")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticCurrentEarNoseThroat() {
+        return new ResponseEntity<>(adminService.getStatisticCurrentEarNoseThroat(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-dentomaxillofacial-percent-now")
+    public ResponseEntity<TreeMap<String, Double>> getStatisticCurrentDentomaxilloFacial() {
+        return new ResponseEntity<>(adminService.getStatisticCurrentDentomaxilloFacial(), HttpStatus.OK);
     }
 
     //END STATISTIC
