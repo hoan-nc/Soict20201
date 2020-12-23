@@ -55,7 +55,6 @@ public class AdminController {
     String getUploadResult(Model model, @Valid @ModelAttribute("fileUpload") FileUpload fileUpload, final Principal principal) throws IOException {
         UserEntity userEntity = userService.getByUsername(principal.getName());
         model.addAttribute("listPerson", fileService.readFile(fileUpload, userEntity));
-        model.addAttribute("records", new Records());
         return "admin/fileProcess";
     }
 

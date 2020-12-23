@@ -161,7 +161,7 @@ public class FileService {
                 }
             }
 
-//            iPhysicalExamRepository.save(physicalExamEntity);
+            iPhysicalExamRepository.save(physicalExamEntity);
             lstPersonEntities.add(physicalExamEntity);
         }
 

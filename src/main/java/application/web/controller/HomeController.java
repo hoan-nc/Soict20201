@@ -1,5 +1,6 @@
 package application.web.controller;
 
+import application.entity.FileUpload;
 import application.entity.UserEntity;
 import application.service.AdminService;
 import application.service.UserService;
@@ -27,6 +28,12 @@ public class HomeController {
         this.authenticatorService = authenticatorService;
         this.adminService = adminService;
         this.userService = userService;
+    }
+
+    @GetMapping
+    String index(Model model) {
+        model.addAttribute("user", new UserEntity());
+        return "login";
     }
 
     @GetMapping("/login")
