@@ -1,6 +1,9 @@
 package application.web.controller;
 
-import application.domain.*;
+import application.domain.DepartmentExamForm;
+import application.domain.ExaminationForm;
+import application.domain.PhysicalExamForm;
+import application.domain.UserRoleForm;
 import application.entity.*;
 import application.entity.id.UserRoleId;
 import application.service.AdminService;
@@ -13,11 +16,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -52,18 +59,24 @@ public class AdminController {
     }
 
     @PostMapping("/fileProcess")
-    String getUploadResult(Model model, @Valid @ModelAttribute("fileUpload") FileUpload fileUpload, final Principal principal) throws IOException {
+    String getUploadResult(Model model,
+                           @Valid @ModelAttribute("fileUpload") FileUpload fileUpload,
+                           final Principal principal,
+                           HttpSession session) throws IOException {
         UserEntity userEntity = userService.getByUsername(principal.getName());
-        model.addAttribute("listPerson", fileService.readFile(fileUpload, userEntity));
+        fileService.readFile(fileUpload, userEntity);
+        List<PhysicalExamEntity> listPerson = fileService.readFile(fileUpload, userEntity);
+        model.addAttribute("listPerson", listPerson);
+        session.setAttribute("listPerson", listPerson);
         return "admin/fileProcess";
     }
 
     @PostMapping("/saveUploadFileResult")
-    String saveUploadResult(Model model, @Valid @ModelAttribute("fileUpload") FileUpload fileUpload, final Principal principal) {
+    String saveUploadResult(@Valid @ModelAttribute("fileUpload") FileUpload fileUpload, final Principal principal) {
         UserEntity userEntity = userService.getByUsername(principal.getName());
-
-//        model.addAttribute("listPerson", fileService.readFile(fileUpload, userEntity));
-//        return "redirect:admin/general-profiles";
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession();
+        List<PhysicalExamEntity> listPerson = (List<PhysicalExamEntity>) session.getAttribute("listPerson");
         return "updateAndClose";
     }
     //END MANAGE UPLOAD FILE
