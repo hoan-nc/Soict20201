@@ -117,6 +117,7 @@ public class AdminController {
         model.addAttribute("allExaminations", adminService.findAllExamination());
         model.addAttribute("allDepartmentExams", adminService.findAllDepartmentExams());
         model.addAttribute("allUsers", adminService.getAllUserRoles());
+        model.addAttribute("physicalExamForm", new PhysicalExamForm());
         return "admin/generalProfile";
     }
 
@@ -163,8 +164,38 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/general-profiles/update", method = RequestMethod.POST)
-    String updatePhysicalExam(PhysicalExamEntity physicalExamEntity) {
+    String updatePhysicalExam(PhysicalExamForm input) {
+        PhysicalExamEntity physicalExamEntity = PhysicalExamEntity.builder()
+                .id(input.getId())
+                .nameUser(input.getFullName())
+                .user(UserEntity.builder().id(input.getUserId()).build())
+                .examination(ExaminationEntity.builder().id(input.getExaminationId()).build())
+                .departmentExam(DepartmentExamEntity.builder().id(input.getDepartmentExamId()).build())
+                .createdDate(input.getCreatedDate())
+                .height(input.getHeight())
+                .weight(input.getWeight())
+                .bloodPressure(input.getBloodPressure())
+                .eyes(input.getEyes())
+                .insideMedical(input.getInsideMedical())
+                .outsideMedical(input.getOutsideMedical())
+                .earNoseThroat(input.getEarNoseThroat())
+                .dentomaxillofacial(input.getDentomaxillofacial())
+                .dermatology(input.getDermatology())
+                .nerve(input.getNerve())
+                .bloodAnalysis(input.getBloodAnalysis())
+                .whiteBloodNumber(input.getWhiteBloodNumber())
+                .redBloodNumber(input.getRedBloodNumber())
+                .hemoglobin(input.getHemoglobin())
+                .plateletNumber(input.getPlateletNumber())
+                .bloodUrea(input.getBloodUrea())
+                .bloodCreatinine(input.getBloodCreatinine())
+                .hepatitisB(input.getHepatitisB())
+                .healthType(input.getHealthType())
+                .advisory(input.getAdvisory())
+                .isActive(true)
+                .build();
         adminService.saveOrUpdatePhysicalExam(physicalExamEntity);
+
         return "redirect:/admin/general-profiles";
     }
 

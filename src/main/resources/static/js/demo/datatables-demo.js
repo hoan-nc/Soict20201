@@ -9,9 +9,12 @@ $(document).ready(function () {
         $.get(href, function (physicalExamEntity) {
             console.log('physicalExamEntity', physicalExamEntity)
             $('#editPhysicalModal #idEdit').val(physicalExamEntity.id);
+            $('#editPhysicalModal #userIdEdit').val(physicalExamEntity.user.id);
             $('#editPhysicalModal #fullNameEdit').val(physicalExamEntity.user.fullName);
-            $('#editPhysicalModal #examinationEdit').val(physicalExamEntity.examination.name);
-            $('#editPhysicalModal #departmentExamEdit').val(physicalExamEntity.departmentExam.name);
+            $('#editPhysicalModal #examinationNameEdit').val(physicalExamEntity.examination.name);
+            $('#editPhysicalModal #examinationIdEdit').val(physicalExamEntity.examination.id);
+            $('#editPhysicalModal #departmentExamNameEdit').val(physicalExamEntity.departmentExam.name);
+            $('#editPhysicalModal #departmentExamIdEdit').val(physicalExamEntity.departmentExam.id);
             $('#editPhysicalModal #createdDateEdit').val(physicalExamEntity.createdDate);
             $('#editPhysicalModal #heightEdit').val(physicalExamEntity.height);
             $('#editPhysicalModal #weightEdit').val(physicalExamEntity.weight);

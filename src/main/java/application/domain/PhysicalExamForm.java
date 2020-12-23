@@ -13,7 +13,11 @@ import java.util.Date;
 @NoArgsConstructor
 public class PhysicalExamForm {
 
+    private Long id;
+
     private Long userId;
+
+    private String fullName;
 
     private Long examinationId;
 
@@ -60,5 +64,7 @@ public class PhysicalExamForm {
     private Long healthType;
 
     private String advisory;
+
+    private Long year;
 
 }
