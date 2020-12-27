@@ -342,6 +342,90 @@ public class AdminController {
         return new ResponseEntity<>(adminService.getStatisticHealthyType(year), HttpStatus.OK);
     }
 
+    @GetMapping("/statistic-nerve-page")
+    String getStatisticNerve(Model model) {
+        String type = "BT";
+        TreeMap<String, Long> mapData = adminService.getStatisticNerve(type);
+        model.addAttribute("mapStatisticNerve", mapData);
+
+        return "admin/statisticNerve";
+    }
+
+    @GetMapping("/statistic-nerve/{type}")
+    public ResponseEntity<TreeMap<String, Long>> getStatisticNerveChart(@PathVariable("type") String type) {
+        return new ResponseEntity<>(adminService.getStatisticNerve(type), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-dermatology-page")
+    String getStatisticDermatology(Model model) {
+        String type = "BT";
+        TreeMap<String, Long> mapData = adminService.getStatisticDermatology(type);
+        model.addAttribute("mapStatisticDermatology", mapData);
+
+        return "admin/statisticDermatology";
+    }
+
+    @GetMapping("/statistic-dermatology/{type}")
+    public ResponseEntity<TreeMap<String, Long>> getStatisticDermatologyChart(@PathVariable("type") String type) {
+        return new ResponseEntity<>(adminService.getStatisticDermatology(type), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-inside-medical-page")
+    String getStatisticInsideMedical(Model model) {
+        String type = "BT";
+        TreeMap<String, Long> mapData = adminService.getStatisticInsideMedical(type);
+        model.addAttribute("mapStatisticInsideMedical", mapData);
+
+        return "admin/statisticInsideMedical";
+    }
+
+    @GetMapping("/statistic-inside-medical/{type}")
+    public ResponseEntity<TreeMap<String, Long>> getStatisticInsideMedicalChart(@PathVariable("type") String type) {
+        return new ResponseEntity<>(adminService.getStatisticInsideMedical(type), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-outside-medical-page")
+    String getStatisticOutsideMedical(Model model) {
+        String type = "BT";
+        TreeMap<String, Long> mapData = adminService.getStatisticOutsideMedical(type);
+        model.addAttribute("mapStatisticOutsideMedical", mapData);
+
+        return "admin/statisticOutsideMedical";
+    }
+
+    @GetMapping("/statistic-outside-medical/{type}")
+    public ResponseEntity<TreeMap<String, Long>> getStatisticOutsideMedicalChart(@PathVariable("type") String type) {
+        return new ResponseEntity<>(adminService.getStatisticOutsideMedical(type), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-ear-nose-throat-page")
+    String getStatisticEarNoseThroat(Model model) {
+        String type = "BT";
+        TreeMap<String, Long> mapData = adminService.getStatisticEarNoseThroat(type);
+        model.addAttribute("mapStatisticEarNoseThroat", mapData);
+
+        return "admin/statisticEarNoseThroat";
+    }
+
+    @GetMapping("/statistic-ear-nose-throat/{type}")
+    public ResponseEntity<TreeMap<String, Long>> getStatisticEarNoseThroatChart(@PathVariable("type") String type) {
+        return new ResponseEntity<>(adminService.getStatisticEarNoseThroat(type), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic-dentomaxillofacial-page")
+    String getStatisticDentomaxiillofacial(Model model) {
+        String type = "BT";
+        TreeMap<String, Long> mapData = adminService.getStatisticDentomaxiillofacial(type);
+        model.addAttribute("mapStatisticEarNoseThroat", mapData);
+
+        return "admin/statisticDentomaxillofacial";
+    }
+
+    @GetMapping("/statistic-dentomaxillofacial/{type}")
+    public ResponseEntity<TreeMap<String, Long>> getStatisticDentomaxiillofacialChart(@PathVariable("type") String type) {
+        return new ResponseEntity<>(adminService.getStatisticDentomaxiillofacial(type), HttpStatus.OK);
+    }
+
     @GetMapping("/statistic-inside-percent-now")
     public ResponseEntity<TreeMap<String, Double>> getStatisticCurrentInsideMedical() {
         return new ResponseEntity<>(adminService.getStatisticCurrentInsideMedical(), HttpStatus.OK);

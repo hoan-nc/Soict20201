@@ -47,6 +47,67 @@ public interface IPhysicalExamRepository extends JpaRepository<PhysicalExamEntit
             "group by p.healthType ")
     List<ChartCommon> statisticHealthyTypeByYear(@Param("year") long year);
 
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.nerve)) " +
+            "FROM PhysicalExamEntity p where p.nerve = 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticNerveNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.nerve)) " +
+            "FROM PhysicalExamEntity p where p.nerve <> 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticNerveNotNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.dermatology)) " +
+            "FROM PhysicalExamEntity p where p.dermatology = 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticDermatologyNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.dermatology)) " +
+            "FROM PhysicalExamEntity p where p.dermatology <> 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticDermatologyNotNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.insideMedical)) " +
+            "FROM PhysicalExamEntity p where p.insideMedical = 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticInsideNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.insideMedical)) " +
+            "FROM PhysicalExamEntity p where p.insideMedical <> 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticInsideNotNormal();
+
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.outsideMedical)) " +
+            "FROM PhysicalExamEntity p where p.outsideMedical = 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticOutsideNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.outsideMedical)) " +
+            "FROM PhysicalExamEntity p where p.outsideMedical <> 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticOutsideNotNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.earNoseThroat)) " +
+            "FROM PhysicalExamEntity p where p.earNoseThroat = 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticEarNoseThroatNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.earNoseThroat)) " +
+            "FROM PhysicalExamEntity p where p.earNoseThroat <> 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticEarNoseThroatNotNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.dentomaxillofacial)) " +
+            "FROM PhysicalExamEntity p where p.dentomaxillofacial = 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticDentomaxiillofacialNormal();
+
+    @Query(value = "SELECT new application.domain.ChartCommon(p.year, count (p.dentomaxillofacial)) " +
+            "FROM PhysicalExamEntity p where p.dentomaxillofacial <> 'Bình thường' " +
+            "group by p.year order by p.year asc ")
+    List<ChartCommon> statisticDentomaxiillofacialNotNormal();
+
     @Query("SELECT count(u.year) " +
             "FROM PhysicalExamEntity u " +
             "where u.year = 2020 and upper(u.insideMedical) like :value ")

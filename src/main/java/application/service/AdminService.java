@@ -50,6 +50,18 @@ public interface AdminService {
 
     TreeMap<String, Long> getStatisticHealthyType(long year);
 
+    TreeMap<String, Long> getStatisticNerve(String type);
+
+    TreeMap<String, Long> getStatisticDermatology(String type);
+
+    TreeMap<String, Long> getStatisticInsideMedical(String type);
+
+    TreeMap<String, Long> getStatisticOutsideMedical(String type);
+
+    TreeMap<String, Long> getStatisticEarNoseThroat(String type);
+
+    TreeMap<String, Long> getStatisticDentomaxiillofacial(String type);
+
     TreeMap<String, Double> getStatisticCurrentInsideMedical();
 
     TreeMap<String, Double> getStatisticCurrentOutsideMedical();

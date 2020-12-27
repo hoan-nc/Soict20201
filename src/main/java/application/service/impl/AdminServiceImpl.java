@@ -227,6 +227,84 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public TreeMap<String, Long> getStatisticNerve(String type) {
+        TreeMap<String, Long> mapData = new TreeMap<>();
+        if (type.equalsIgnoreCase("BT")) {
+            physicalExamRepository.statisticNerveNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        } else {
+            physicalExamRepository.statisticNerveNotNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        }
+        return mapData;
+    }
+
+    @Override
+    public TreeMap<String, Long> getStatisticDermatology(String type) {
+        TreeMap<String, Long> mapData = new TreeMap<>();
+        if (type.equalsIgnoreCase("BT")) {
+            physicalExamRepository.statisticDermatologyNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        } else {
+            physicalExamRepository.statisticDermatologyNotNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        }
+        return mapData;
+    }
+
+    @Override
+    public TreeMap<String, Long> getStatisticInsideMedical(String type) {
+        TreeMap<String, Long> mapData = new TreeMap<>();
+        if (type.equalsIgnoreCase("BT")) {
+            physicalExamRepository.statisticInsideNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        } else {
+            physicalExamRepository.statisticInsideNotNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        }
+        return mapData;
+    }
+
+    @Override
+    public TreeMap<String, Long> getStatisticOutsideMedical(String type) {
+        TreeMap<String, Long> mapData = new TreeMap<>();
+        if (type.equalsIgnoreCase("BT")) {
+            physicalExamRepository.statisticOutsideNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        } else {
+            physicalExamRepository.statisticOutsideNotNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        }
+        return mapData;
+    }
+
+    @Override
+    public TreeMap<String, Long> getStatisticEarNoseThroat(String type) {
+        TreeMap<String, Long> mapData = new TreeMap<>();
+        if (type.equalsIgnoreCase("BT")) {
+            physicalExamRepository.statisticEarNoseThroatNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        } else {
+            physicalExamRepository.statisticEarNoseThroatNotNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        }
+        return mapData;
+    }
+
+    @Override
+    public TreeMap<String, Long> getStatisticDentomaxiillofacial(String type) {
+        TreeMap<String, Long> mapData = new TreeMap<>();
+        if (type.equalsIgnoreCase("BT")) {
+            physicalExamRepository.statisticDentomaxiillofacialNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        } else {
+            physicalExamRepository.statisticDentomaxiillofacialNotNormal()
+                    .forEach(obj -> mapData.put(obj.getName().toString(), (Long) obj.getValue()));
+        }
+        return mapData;
+    }
+
+    @Override
     public TreeMap<String, Double> getStatisticCurrentInsideMedical() {
         TreeMap<String, Double> mapData = new TreeMap<>();
         String searchValue = "BÌNH THƯỜNG" + "%";

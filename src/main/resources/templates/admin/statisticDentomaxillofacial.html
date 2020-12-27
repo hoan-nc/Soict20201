@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/sidebar :: common-css-admin">
+    <meta charset="utf-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://code.highcharts.com/css/highcharts.css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/js/lib-table/datatables.css"/>
+
+    <title>High Chart Example - Spring Boot</title>
+</head>
+
+<link rel="stylesheet"
+      href="https://code.highcharts.com/css/highcharts.css"/>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: side-bar"></div>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Bắt đầu nội dung trang -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <div th:replace="fragments/topbar :: top-bar"></div>
+            <!-- End of Topbar -->
+
+            <!-- Bắt đầu bảng phân quyền -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Thống kê răng, hàm, mặt theo năm</h1>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <select id="dentoMaxillofacial" class="form-control"
+                                        style="width: 300px!important; margin-left: 50px; margin-bottom: 20px;">
+                                    <option th:value="'BT'" th:text="'Bình thường'"></option>
+                                    <option th:value="'NBT'" th:text="'Không bình thường'"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <figure class="highcharts-figure">
+                            <div id="container-bar-dentoMaxillofacial"></div>
+                        </figure>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="tableStatisticNerve" class="table table-bordered"
+                                   width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Năm</th>
+                                    <th>Số lượng</th>
+                                </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Kết thúc bảng phân quyền -->
+
+        </div>
+        <!-- Kết thúc trang -->
+
+        <!-- Footer -->
+        <div th:replace="fragments/footer :: footer"></div>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+
+
+<div th:replace="fragments/sidebar :: sidebar-js"></div>
+<script th:src="@{~/js/common.js}"></script>
+
+<!-- Bootstrap core JavaScript-->
+<!--<script th:src="@{~/js/jquery/jquery.min.js}"></script>-->
+<!--<script th:src="@{~/js/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
+
+<!-- Core plugin JavaScript-->
+<!--<script th:src="@{~/js/jquery-easing/jquery.easing.min.js}"></script>-->
+
+<!-- Custom scripts for all pages-->
+<!--<script th:src="@{~/js/sb-admin-2.min.js}"></script>-->
+<!-- Page level plugins -->
+<script th:src="@{~/js/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{~/js/datatables/dataTables.bootstrap4.min.js}"></script>
+
+
+<!-- Page level custom scripts -->
+<script th:src="@{~/js/demo/statistic-column-chart-dentomaxillofacial.js}"></script>
+<!--<script th:src="@{~/js/lib-table/datatables.css}"></script>-->
+<script th:src="@{~/js/lib-table/datatables.js}"></script>
+</body>
+
+</html>
