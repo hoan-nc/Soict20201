@@ -12,6 +12,7 @@ $(document).ready(function () {
             success: function (result) {
                 let nameArr = [];
                 let valueArr = [];
+                console.log('result', result)
                 Object.keys(result).forEach(
                     function (key) {
                         nameArr.push(key);
@@ -53,6 +54,8 @@ $(document).ready(function () {
     }
 
     function drawTable(nameArr, valueArr) {
+        console.log('nameArr', nameArr);
+        console.log('valueArr', valueArr);
         $('#tableStatisticHealthyType').DataTable({
             data: valueArr.map((item, index) => ({
                 idx: index + 1,
@@ -65,8 +68,7 @@ $(document).ready(function () {
                 {data: 'value'},
             ],
             destroy: true,
-            searching: false,
-            retrieve: true,
+            searching: false
         });
 
     }

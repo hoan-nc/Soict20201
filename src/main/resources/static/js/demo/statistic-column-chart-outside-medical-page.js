@@ -69,8 +69,7 @@ $(document).ready(function () {
                 {data: 'value'},
             ],
             destroy: true,
-            searching: false,
-            retrieve: true,
+            searching: false
         });
 
     }
