@@ -77,6 +77,7 @@ public class AdminController {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attr.getRequest().getSession();
         List<PhysicalExamEntity> listPerson = (List<PhysicalExamEntity>) session.getAttribute("listPerson");
+        fileService.saveResult(listPerson);
         return "updateAndClose";
     }
     //END MANAGE UPLOAD FILE

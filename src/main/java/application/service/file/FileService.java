@@ -66,7 +66,7 @@ public class FileService {
             physicalExamEntity.setYear(fileUpload.getExamination().getYear());
             physicalExamEntity.setExamination(fileUpload.getExamination());
             physicalExamEntity.setDepartmentExam(fileUpload.getDepartment());
-            physicalExamEntity.setUser(userEntity);
+//            physicalExamEntity.setUser(userServiceImpl.getByUsername("admin"));
             // Get all cells
             Iterator<Cell> cellIterator = nextRow.cellIterator();
             // Read cells and set value for book object
@@ -84,11 +84,13 @@ public class FileService {
 //                        person.setPersonId(Integer.parseInt(getCellValue(cell).toString()));
                         break;
                     case Const.ReadFile.COLUMN_INDEX_1:
-
+                        UserEntity uEntity = userServiceImpl.getByUsername(getCellValue(cell).toString());
+                        physicalExamEntity.setUser(uEntity);
+                        physicalExamEntity.setNameUser(uEntity.getFullName());
                         break;
                     case Const.ReadFile.COLUMN_INDEX_2:
-//                        person.setPersonName(getCellValue(cell).toString());
-                        physicalExamEntity.setNameUser("Hoan");
+//                        physicalExamEntity.setNameUser(getCellValue(cell).toString());
+//                        physicalExamEntity.setNameUser("Hoan");
                         break;
                     case Const.ReadFile.COLUMN_INDEX_3:
 //                        person.setPersonName(getCellValue(cell).toString());
@@ -161,7 +163,7 @@ public class FileService {
                 }
             }
 
-            iPhysicalExamRepository.save(physicalExamEntity);
+//            iPhysicalExamRepository.save(physicalExamEntity);
             lstPersonEntities.add(physicalExamEntity);
         }
 
@@ -209,5 +211,11 @@ public class FileService {
         }
 
         return cellValue;
+    }
+
+    public void saveResult(List<PhysicalExamEntity> lstPerson){
+        for (int i = 0; i < lstPerson.size(); i++) {
+            iPhysicalExamRepository.save(lstPerson.get(i));
+        }
     }
 }
